@@ -18,8 +18,8 @@ public class Percorrenza {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mezzo_id", referencedColumnName = "id_mezzo", nullable = false)
-    private Mezzo mezzo;
+    @JoinColumn(name = "mezzo_id", referencedColumnName = "idMezzi", nullable = false)
+    private MezzoDiTrasporto mezzo;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +37,7 @@ public class Percorrenza {
 
     protected Percorrenza() {}
 
-    public Percorrenza(Mezzo mezzo, Tratta tratta, LocalDate data_ora_partenza, LocalDate data_ora_arrivo, int minuti_effettivi) {
+    public Percorrenza(MezzoDiTrasporto mezzo, Tratta tratta, LocalDate data_ora_partenza, LocalDate data_ora_arrivo, int minuti_effettivi) {
         this.mezzo = mezzo;
         this.tratta = tratta;
         this.data_ora_partenza = data_ora_partenza;
@@ -51,7 +51,7 @@ public class Percorrenza {
         return id_percorrenze;
     }
 
-    public Mezzo getMezzo() {
+    public MezzoDiTrasporto getMezzo() {
         return mezzo;
     }
 
@@ -73,7 +73,7 @@ public class Percorrenza {
 
     //   Setter
 
-    public void setMezzo(Mezzo mezzo) {
+    public void setMezzo(MezzoDiTrasporto mezzo) {
         this.mezzo = mezzo;
     }
 
