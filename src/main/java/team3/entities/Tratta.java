@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,7 +28,8 @@ public class Tratta {
     @OneToMany(mappedBy = "tratta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Percorrenza> percorrenze = new HashSet<>();
 
-    protected Tratta() {}
+    protected Tratta() {
+    }
 
     public Tratta(String zona_partenza, String capolinea, int tempo_previsto_minuti) {
         this.zona_partenza = zona_partenza;
@@ -47,30 +47,30 @@ public class Tratta {
         return zona_partenza;
     }
 
-    public String getCapolinea() {
-        return capolinea;
-    }
-
-    public int getTempo_previsto_minuti() {
-        return tempo_previsto_minuti;
-    }
-
-    public Set<Percorrenza> getPercorrenze() {
-        return percorrenze;
-    }
-
-    // Setter
-
     public void setZona_partenza(String zona_partenza) {
         this.zona_partenza = zona_partenza;
+    }
+
+    public String getCapolinea() {
+        return capolinea;
     }
 
     public void setCapolinea(String capolinea) {
         this.capolinea = capolinea;
     }
 
+    // Setter
+
+    public int getTempo_previsto_minuti() {
+        return tempo_previsto_minuti;
+    }
+
     public void setTempo_previsto_minuti(int tempo_previsto_minuti) {
         this.tempo_previsto_minuti = tempo_previsto_minuti;
+    }
+
+    public Set<Percorrenza> getPercorrenze() {
+        return percorrenze;
     }
 
     // helper
@@ -95,5 +95,5 @@ public class Tratta {
     }
 
 
-    }
 }
+
