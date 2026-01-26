@@ -93,7 +93,7 @@ public class Tratta {
                 ", tempo_previsto_minuti=" + tempo_previsto_minuti +
                 '}';
     }
-
+}
 
 
 
