@@ -18,10 +18,15 @@ public class MezzoDiTrasporto {
     private List<PeriodoDiServizio> periodo;
 
     private int capienza;
-     public MezzoDiTrasporto(TipoMezzoDiTrasporto tipoDiMezzo, int capienza) {
+
+    protected MezzoDiTrasporto() {
+    }
+
+    public MezzoDiTrasporto(TipoMezzoDiTrasporto tipoDiMezzo, int capienza) {
         this.tipoDiMezzo = tipoDiMezzo;
         this.capienza = capienza;
 }
+
 // getter e setter
 
     public UUID getIdMezzi() {
