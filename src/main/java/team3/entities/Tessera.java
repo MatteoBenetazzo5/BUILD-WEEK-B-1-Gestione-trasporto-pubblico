@@ -78,4 +78,13 @@ public class Tessera {
     public void setUtente(Utente utente) {
         this.utente = utente;
     }
+
+    @Override
+    public String toString() {
+        return "Tessera{" +
+                "codiceTessera='" + codiceTessera + '\'' +
+                ", dataEmissione=" + dataEmissione +
+                ", dataScadenza=" + dataScadenza +
+                '}';
+    }
 }
