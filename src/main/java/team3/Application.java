@@ -5,10 +5,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import team3.dao.MezziDiTrasportoDAO;
 import team3.dao.PeriodiDiServizioDAO;
-import team3.entities.MezzoDiTrasporto;
-import team3.entities.PeriodoDiServizio;
-import team3.entities.StatoServizio;
-import team3.entities.TipoMezzoDiTrasporto;
+import team3.dao.TesseraDAO;
+import team3.dao.UtenteDAO;
+import team3.entities.*;
 import team3.exceptions.NotFoundException;
 import team3.exceptions.NotFoundIdException;
 
@@ -24,6 +23,42 @@ public class Application {
     public static void main(String[] args) {
 
         EntityManager em = emf.createEntityManager();
+
+        UtenteDAO utenteDAO = new UtenteDAO(em);
+        TesseraDAO tesseraDAO = new TesseraDAO(em);
+
+        // ---------- CREO 4 UTENTI ----------
+
+        Utente u1 = new Utente("Mario", "Rossi");
+        Utente u2 = new Utente("Luigi", "Bianchi");
+        Utente u3 = new Utente("Dario", "Verdi");
+        Utente u4 = new Utente("Anna", "Viola");
+
+//        utenteDAO.saveUtente(u1);
+//        utenteDAO.saveUtente(u2);
+//        utenteDAO.saveUtente(u3);
+//        utenteDAO.saveUtente(u4);
+
+
+        // ---------- CREO 2 TESSERE ----------
+
+        Tessera t1 = new Tessera();
+        t1.setCodiceTessera("TESSERA-001");
+        t1.setDataEmissione(LocalDate.now());
+        t1.setDataScadenza(LocalDate.now().plusYears(1));
+        t1.setUtente(u1);
+
+        Tessera t2 = new Tessera();
+        t2.setCodiceTessera("TESSERA-002");
+        t2.setDataEmissione(LocalDate.now());
+        t2.setDataScadenza(LocalDate.now().plusYears(1));
+        t2.setUtente(u2);
+
+//        tesseraDAO.saveTessera(t1);
+//        tesseraDAO.saveTessera(t2);
+
+
+
 
         // MEZZI DI TRASPORTO
         // salvo un mezzo di trasporto
@@ -80,6 +115,6 @@ public class Application {
             System.out.println(ex.getMessage());
         }
 
-    }
 
-}
+
+}}
