@@ -38,19 +38,43 @@ public class PeriodoDiServizio {
                              LocalDate dataFine, String causaManutenzione) {
         this.statoServizio = statoServizio;
         this.mezzo = mezzo;
-        this.causaManutenzione = causaManutenzione;
-        // Faccio dei controlli sulle date (la data di inizio non deve essere null
-        // e la data di fine deve essere successiva a quella di inizio
+
+        // Faccio dei controlli
+        // Un mezzo di trasporto in servizio ha solo la data di inizio. Non ha la data fine né la causa di manutenzione
+        // Il mezzo in manutenzione invece ha data inizio, data fine e causa manutenzione.
+        // La data di fine manutenzione deve essere posteriore alla data di inizio manutenzione
         if (dataInizio == null) {
             throw new IllegalArgumentException("Devi inserire una data di inizio!");
         }
 
-        if (dataFine != null && dataFine.isBefore(dataInizio)) {
-            throw new IllegalArgumentException("Attenzione! La data di fine deve essere " +
-                    "successiva alla data di inizio!");
+        switch (statoServizio) {
+            case IN_SERVIZIO -> {
+                if (dataFine != null ) {
+                    throw new IllegalArgumentException(
+                            "Se il mezzo è in servizio, la data di fine servizio deve essere null.");
+                }
+                if (causaManutenzione != null && !causaManutenzione.isBlank()) {
+                    throw new IllegalArgumentException(
+                            "La causa di manutenzione di un mezzo in servizio deve essere null.");
+                }
+            }
+            case IN_MANUTENZIONE -> {
+                if (dataFine != null && dataFine.isBefore(dataInizio)) {
+                    throw new IllegalArgumentException(
+                            "La data di fine manutenzione deve essere posteriore alla data di inizio.");
+                }
+                if (causaManutenzione == null || causaManutenzione.isBlank()) {
+                    throw new IllegalArgumentException(
+                            "Devi aggiungere la causa della manutenzione!"
+                    );
+                }
+            }
         }
+
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+        this.causaManutenzione = causaManutenzione;
+
     }
 
     public UUID getId() {
