@@ -37,11 +37,7 @@ public class UtenteDAO {
 
     public boolean deleteUtenteById(UUID idUtente) {
 
-        Utente u = entityManager.find(Utente.class, idUtente);
-
-        if (u == null) {
-            return false;
-        }
+        Utente u = findById(idUtente);
 
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
