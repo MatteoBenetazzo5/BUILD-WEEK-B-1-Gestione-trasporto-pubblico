@@ -3,8 +3,6 @@ package team3.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.time.LocalDate;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -26,22 +24,15 @@ public class Percorrenza {
     @JoinColumn(name = "tratta_id", referencedColumnName = "id_tratta", nullable = false)
     private Tratta tratta;
 
-    @Column(name = "data_ora_partenza", nullable = false)
-    private LocalDate data_ora_partenza;
-
-    @Column(name = "data_ora_arrivo", nullable = false)
-    private LocalDate data_ora_arrivo;
-
     @Column(name = "minuti_effettivi", nullable = false)
     private int minuti_effettivi;
 
-    protected Percorrenza() {}
+    protected Percorrenza() {
+    }
 
-    public Percorrenza(MezzoDiTrasporto mezzo, Tratta tratta, LocalDate data_ora_partenza, LocalDate data_ora_arrivo, int minuti_effettivi) {
+    public Percorrenza(MezzoDiTrasporto mezzo, Tratta tratta, int minuti_effettivi) {
         this.mezzo = mezzo;
         this.tratta = tratta;
-        this.data_ora_partenza = data_ora_partenza;
-        this.data_ora_arrivo = data_ora_arrivo;
         this.minuti_effettivi = minuti_effettivi;
     }
 
@@ -55,38 +46,22 @@ public class Percorrenza {
         return mezzo;
     }
 
+    public void setMezzo(MezzoDiTrasporto mezzo) {
+        this.mezzo = mezzo;
+    }
+
     public Tratta getTratta() {
         return tratta;
     }
 
-    public LocalDate getData_ora_partenza() {
-        return data_ora_partenza;
-    }
-
-    public LocalDate getData_ora_arrivo() {
-        return data_ora_arrivo;
-    }
-
-    public int getMinuti_effettivi() {
-        return minuti_effettivi;
-    }
-
     //   Setter
-
-    public void setMezzo(MezzoDiTrasporto mezzo) {
-        this.mezzo = mezzo;
-    }
 
     public void setTratta(Tratta tratta) {
         this.tratta = tratta;
     }
 
-    public void setData_ora_partenza(LocalDate data_ora_partenza) {
-        this.data_ora_partenza = data_ora_partenza;
-    }
-
-    public void setData_ora_arrivo(LocalDate data_ora_arrivo) {
-        this.data_ora_arrivo = data_ora_arrivo;
+    public int getMinuti_effettivi() {
+        return minuti_effettivi;
     }
 
     public void setMinuti_effettivi(int minuti_effettivi) {
@@ -97,8 +72,6 @@ public class Percorrenza {
     public String toString() {
         return "Percorrenza{" +
                 "id_percorrenze=" + id_percorrenze +
-                ", data_ora_partenza=" + data_ora_partenza +
-                ", data_ora_arrivo=" + data_ora_arrivo +
                 ", minuti_effettivi=" + minuti_effettivi +
                 '}';
     }

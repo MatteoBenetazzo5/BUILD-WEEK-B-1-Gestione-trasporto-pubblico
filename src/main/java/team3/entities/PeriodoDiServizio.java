@@ -27,9 +27,29 @@ public class PeriodoDiServizio {
     @Column(name = "data_fine")
     private LocalDate dataFine;
 
+    @Column(name = "causa_manutenzione")
+    private String causaManutenzione;
+
     public PeriodoDiServizio() {
     }
     // getter e setter
+
+    public PeriodoDiServizio(StatoServizio statoServizio, MezzoDiTrasporto mezzo, LocalDate dataInizio, LocalDate dataFine) {
+        this.statoServizio = statoServizio;
+        this.mezzo = mezzo;
+        // Faccio dei controlli sulle date (la data di inizio non deve essere null
+        // e la data di fine deve essere successiva a quella di inizio
+        if (dataInizio == null) {
+            throw new IllegalArgumentException("Devi inserire una data di inizio!");
+        }
+
+        if (dataFine != null && dataFine.isBefore(dataInizio)) {
+            throw new IllegalArgumentException("Attenzione! La data di fine deve essere " +
+                    "successiva alla data di inizio!");
+        }
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
+    }
 
     public UUID getId() {
         return id;
@@ -67,21 +87,12 @@ public class PeriodoDiServizio {
         this.dataFine = dataFine;
     }
 
-    public PeriodoDiServizio(StatoServizio statoServizio, MezzoDiTrasporto mezzo, LocalDate dataInizio, LocalDate dataFine) {
-        this.statoServizio = statoServizio;
-        this.mezzo = mezzo;
-        // Faccio dei controlli sulle date (la data di inizio non deve essere null
-        // e la data di fine deve essere successiva a quella di inizio
-        if (dataInizio == null) {
-            throw new IllegalArgumentException("Devi inserire una data di inizio!");
-        }
+    public String getCausaManutenzione() {
+        return causaManutenzione;
+    }
 
-        if (dataFine != null && dataFine.isBefore(dataInizio)) {
-            throw new IllegalArgumentException("Attenzione! La data di fine deve essere " +
-                    "successiva alla data di inizio!");
-        }
-        this.dataInizio = dataInizio;
-        this.dataFine = dataFine;
+    public void setCausaManutenzione(String causaManutenzione) {
+        this.causaManutenzione = causaManutenzione;
     }
 
 }

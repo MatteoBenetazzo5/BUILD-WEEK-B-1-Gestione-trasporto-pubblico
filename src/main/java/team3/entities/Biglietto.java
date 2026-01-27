@@ -23,8 +23,6 @@ public class Biglietto {
     @Column(name = "data_emissione", nullable = false)
     private LocalDate dataEmissione;
 
-    @Column(name = "vidimato", nullable = false)
-    private boolean vidimato;
 
     @Column(name = "data_vidimazione")
     private LocalDateTime dataVidimazione; // nullable finché non è vidimato
@@ -33,13 +31,16 @@ public class Biglietto {
     @JoinColumn(name = "punto_emissione_id", nullable = false)
     private PuntoVendita puntoVendita;
 
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id", nullable = false)
+    private MezzoDiTrasporto mezzo;
+
     public Biglietto() {
     }
 
-    public Biglietto(String codiceUnivoco, LocalDate dataEmissione, boolean vidimato, LocalDateTime dataVidimazione, PuntoVendita puntoVendita) {
+    public Biglietto(String codiceUnivoco, LocalDate dataEmissione, LocalDateTime dataVidimazione, PuntoVendita puntoVendita) {
         this.codiceUnivoco = codiceUnivoco;
         this.dataEmissione = dataEmissione;
-        this.vidimato = vidimato;
         this.dataVidimazione = dataVidimazione;
         this.puntoVendita = puntoVendita;
     }
@@ -64,13 +65,6 @@ public class Biglietto {
         this.dataEmissione = dataEmissione;
     }
 
-    public boolean isVidimato() {
-        return vidimato;
-    }
-
-    public void setVidimato(boolean vidimato) {
-        this.vidimato = vidimato;
-    }
 
     public LocalDateTime getDataVidimazione() {
         return dataVidimazione;
@@ -94,7 +88,6 @@ public class Biglietto {
                 "idBiglietto=" + idBiglietto +
                 ", codiceUnivoco='" + codiceUnivoco + '\'' +
                 ", dataEmissione=" + dataEmissione +
-                ", vidimato=" + vidimato +
                 ", dataVidimazione=" + dataVidimazione +
                 '}';
     }
