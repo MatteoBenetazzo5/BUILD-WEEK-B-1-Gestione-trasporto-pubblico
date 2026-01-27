@@ -100,14 +100,14 @@ public class Application {
             // Lista dei periodi di servizio dato l'id
             System.out.println("\nPeriodi di servizio: ");
             periodiDAO.getPeriodiDiServizio(idMezzo).forEach(p ->
-                    System.out.println("Date di inizio servizio: " + p.getDataInizio() +
-                            " date di fine: " + p.getDataFine())
+                    System.out.println("Date di inizio servizio: " + p.getDataInizio())
             );
 
             // Lista dei periodi di manutenzione dato l'id
             System.out.println("\nPeriodi di manutenzione: ");
             periodiDAO.getPeriodiDiManutenzione(idMezzo).forEach(p ->
-                    System.out.println("Date di inizio manutenzione: " + p.getDataInizio() +
+                    System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
+                            "\nDate di inizio manutenzione: " + p.getDataInizio() +
                             " date di fine: " + p.getDataFine())
             );
 
