@@ -2,6 +2,7 @@ package team3.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import team3.entities.PuntoVendita;
 import team3.entities.Utente;
 
 import java.util.UUID;
@@ -20,6 +21,18 @@ public class UtenteDAO {
         transaction.commit();
 
         System.out.println("L'utente " + newUtente.getNome() + " è stato salvato correttamente!");
+    }
+
+    public Utente findById(UUID id) {
+
+        Utente u = entityManager.find(Utente.class, id);
+
+        if (u == null) {
+            System.out.println("Il punto vendita con id: " + id + " non è stato trovato");
+            return null;
+        }
+
+        return u;
     }
 
     public boolean deleteUtenteById(UUID idUtente) {
