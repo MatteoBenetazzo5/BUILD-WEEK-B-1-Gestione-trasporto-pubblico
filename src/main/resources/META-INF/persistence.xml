@@ -14,7 +14,6 @@
         <class>team3.entities.Tessera</class>
         <class>team3.entities.Tratta</class>
         <class>team3.entities.Utente</class>
-        <class>team3.entities.Vidimazione</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/trasporto_pubblico"/>

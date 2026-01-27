@@ -1,0 +1,4 @@
+package team3.dao;
+
+public class MezziDAO {
+}
