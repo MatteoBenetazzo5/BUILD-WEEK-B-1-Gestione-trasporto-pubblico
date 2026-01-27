@@ -18,26 +18,24 @@ public class PeriodiDiServizioDAO {
     // Tenere traccia dei periodi di servizio e manutenzione di ogni mezzo.
     // Creo un metodo per prendere i periodi di servizio e controllare lo stato e li ordino per data di inizio
 
-    private List<PeriodoDiServizio> getPeriodi(UUID idMezzo, StatoServizio stato) {
+    private List<PeriodoDiServizio> getPeriodi(UUID idmezzi, StatoServizio stato) {
         return entityManager.createQuery(
                         "SELECT p FROM PeriodoDiServizio p " +
-                                "WHERE p.mezzo.idMezzi = :id " +
+                                "WHERE p.idmezzi = :id " +
                                 "AND p.statoServizio = :stato " +
-                                "ORDER BY p.dataInizio DESC",
+                                "ORDER BY p.data_inizio DESC",
                         PeriodoDiServizio.class
                 )
-                .setParameter("id", idMezzo)
+                .setParameter("id", idmezzi)
                 .setParameter("stato",stato)
                 .getResultList();
     }
         // riutilizzo il metodo sopra con i due stati che mi servono (IN_MANUTENZIONE, IN_SERVIZIO)
-    public List<PeriodoDiServizio> getPeriodiDiManutenzione(UUID idMezzo) {
-        return getPeriodi(idMezzo, StatoServizio.IN_MANUTENZIONE);
+    public List<PeriodoDiServizio> getPeriodiDiManutenzione(UUID idmezzi) {
+        return getPeriodi(idmezzi, StatoServizio.IN_MANUTENZIONE);
     }
 
-    public List<PeriodoDiServizio> getPeriodiDiServizio(UUID idMezzo) {
-        return getPeriodi(idMezzo, StatoServizio.IN_SERVIZIO);
+    public List<PeriodoDiServizio> getPeriodiDiServizio(UUID idmezzi) {
+        return getPeriodi(idmezzi, StatoServizio.IN_SERVIZIO);
     }
-
-
 }
