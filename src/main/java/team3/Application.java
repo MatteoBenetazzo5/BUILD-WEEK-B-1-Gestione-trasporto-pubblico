@@ -3,10 +3,7 @@ package team3;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import team3.dao.MezziDiTrasportoDAO;
-import team3.dao.PeriodiDiServizioDAO;
-import team3.dao.TesseraDAO;
-import team3.dao.UtenteDAO;
+import team3.dao.*;
 import team3.entities.*;
 import team3.exceptions.NotFoundException;
 import team3.exceptions.NotFoundIdException;
@@ -34,10 +31,10 @@ public class Application {
         Utente u3 = new Utente("Dario", "Verdi");
         Utente u4 = new Utente("Anna", "Viola");
 
-//        utenteDAO.saveUtente(u1);
-//        utenteDAO.saveUtente(u2);
-//        utenteDAO.saveUtente(u3);
-//        utenteDAO.saveUtente(u4);
+     //   utenteDAO.saveUtente(u1);
+      //  utenteDAO.saveUtente(u2);
+       //  utenteDAO.saveUtente(u3);
+       //  utenteDAO.saveUtente(u4);
 
 
         // ---------- CREO 2 TESSERE ----------
@@ -54,8 +51,8 @@ public class Application {
         t2.setDataScadenza(LocalDate.now().plusYears(1));
         t2.setUtente(u2);
 
-//        tesseraDAO.saveTessera(t1);
-//        tesseraDAO.saveTessera(t2);
+      // tesseraDAO.saveTessera(t1);
+      //  tesseraDAO.saveTessera(t2);
 
 
 
@@ -65,11 +62,32 @@ public class Application {
         MezziDiTrasportoDAO mezzoDAO = new MezziDiTrasportoDAO(em);
 
 
-        MezzoDiTrasporto mezzo = new MezzoDiTrasporto(
-                TRAM,
-                50
-        );
-        //mezzoDAO.save(mezzo);
+        //MezzoDiTrasporto mezzo = new MezzoDiTrasporto(
+            //    TRAM,
+           //     50
+     //   );
+      //  mezzoDAO.save(mezzo);
+
+        //PUNTO DI VENDITA
+        PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
+
+        //PuntoVendita puntoVendita1 = new PuntoVendita(StatoPuntoVendita.ATTIVO,TipoPuntoVendita.DISTRIBUTORE);
+        PuntoVendita puntoVendita2 = new PuntoVendita(StatoPuntoVendita.FUORI_SERVIZIO,TipoPuntoVendita.DISTRIBUTORE);
+        PuntoVendita puntoVendita3 = new PuntoVendita(null, TipoPuntoVendita.RIVENDITORE);
+        PuntoVendita puntoVendita4 = new PuntoVendita(null,TipoPuntoVendita.RIVENDITORE);
+
+        //puntoVenditaDAO.save(puntoVendita1);
+       // puntoVenditaDAO.save(puntoVendita2);
+       // puntoVenditaDAO.save(puntoVendita3);
+       // puntoVenditaDAO.save(puntoVendita4);
+
+        //BIGLIETTO
+        PuntoVendita puntoVendita1 = puntoVenditaDAO.findById(UUID.fromString("03ca3045-4470-4943-be2d-03339f96b5be"));
+        MezzoDiTrasporto mezzo = mezzoDAO.findById(UUID.fromString("b9da2f59-3544-4bbf-affa-78a9c78c4f97"));
+        BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
+
+        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVendita1,mezzo);
+            //bigliettiDAO.save(biglietto1);
 
         // Cerco il tipo di mezzo dato un id presente nel DB
         try {
@@ -94,7 +112,7 @@ public class Application {
                 null
         );
 
-        //periodiDAO.save(p1);
+     //   periodiDAO.save(p1);
 
         try {
             // Lista dei periodi di servizio dato l'id

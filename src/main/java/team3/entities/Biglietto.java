@@ -38,11 +38,12 @@ public class Biglietto {
     public Biglietto() {
     }
 
-    public Biglietto(String codiceUnivoco, LocalDate dataEmissione, LocalDateTime dataVidimazione, PuntoVendita puntoVendita) {
+    public Biglietto(String codiceUnivoco, LocalDate dataEmissione, LocalDateTime dataVidimazione, PuntoVendita puntoVendita, MezzoDiTrasporto mezzo) {
         this.codiceUnivoco = codiceUnivoco;
         this.dataEmissione = dataEmissione;
         this.dataVidimazione = dataVidimazione;
         this.puntoVendita = puntoVendita;
+        this.mezzo = mezzo;
     }
 
     public UUID getIdBiglietto() {

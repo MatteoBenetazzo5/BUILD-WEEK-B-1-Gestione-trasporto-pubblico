@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import team3.entities.Biglietto;
+import team3.entities.MezzoDiTrasporto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,35 +19,20 @@ public class BigliettiDAO {
         this.em = em;
     }
 
-    public List<Biglietto> findBigliettiVidimatiPerMezzo(
-            UUID mezzoId,
-            LocalDate dataEmissione
-    ) {
-        EntityTransaction et = em.getTransaction();
-        try {
-            et.begin();
+   // public List<Biglietto> findBigliettiVidimatiPerMezzo(
+         //   UUID mezzoId,
+        //    LocalDate dataEmissione
+  //  )
+   public void save(Biglietto b) {
 
-            List result = em.createNativeQuery(
-                                               """
-                                               SELECT *
-                                               FROM biglietto
-                                                 WHERE data_emissione = :dataEmissione
-                                                 AND data_vidimazione IS NOT NULL
-                                               """,
-                                               Biglietto.class
-                                       )
-                                       .setParameter("mezzoId", mezzoId)
-                                       .setParameter("dataEmissione", dataEmissione)
-                                       .getResultList();
+       EntityTransaction transaction = em.getTransaction();
+       transaction.begin();
+       em.persist(b);
+       transaction.commit();
 
-            et.commit();
-            return result;
+       System.out.println("Il biglietto con id: " + b.getIdBiglietto()+ " "  + " è stato correttamente salvato!");
+   }
 
-        } catch (PersistenceException e) {
-            if (et.isActive()) et.rollback();
-            throw new RuntimeException("Errore nel recupero dei biglietti vidimati per mezzo", e);
-        }
-    }
     public long countBigliettiVidimatiPeriodo(
             LocalDateTime from,
             LocalDateTime to
@@ -55,7 +41,7 @@ public class BigliettiDAO {
         try {
             et.begin();
 
-            Number count = (Number) em.createNativeQuery(
+            Number count = (Number) em.createQuery(
                                               """
                                               SELECT COUNT(*)
                                               FROM biglietti
