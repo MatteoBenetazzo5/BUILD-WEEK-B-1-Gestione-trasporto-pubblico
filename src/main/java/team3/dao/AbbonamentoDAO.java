@@ -1,0 +1,53 @@
+package team3.dao;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+public class AbbonamentoDAO {
+
+    private final EntityManager em;
+
+    public AbbonamentoDAO(EntityManager em) {
+        this.em = em;
+    }
+
+    // 1) VALIDITA ABBONAMENTO
+    // ritorna true se esiste almeno un abbonamento attivo per quella tessera in quella data
+    public boolean isAbbonamentoValido(String codiceTessera, LocalDate dataControllo) {
+        try {
+            Long count = em.createQuery(
+                            "SELECT COUNT(a) " +
+                                    "FROM Abbonamento a " +
+                                    "WHERE a.tessera.codiceTessera = :cod " +
+                                    "AND :d BETWEEN a.dataInizio AND a.dataFine",
+                            Long.class
+                    )
+                    .setParameter("cod", codiceTessera)
+                    .setParameter("d", dataControllo)
+                    .getSingleResult();
+
+            return count != null && count > 0;
+
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    // 2) NUM ABBONAMENTI EMESSI PER PUNTO EMISSIONE in un PERIODO (uso dataInizio come emissione)
+    public long countEmessiPerPuntoVendita(UUID puntoVenditaId, LocalDate start, LocalDate end) {
+        return em.createQuery(
+                        "SELECT COUNT(a) " +
+                                "FROM Abbonamento a " +
+                                "WHERE a.puntoVendita.idPuntiVendita = :pid " +
+                                "AND a.dataInizio BETWEEN :start AND :end",
+                        Long.class
+                )
+                .setParameter("pid", puntoVenditaId)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .getSingleResult();
+    }
+}
