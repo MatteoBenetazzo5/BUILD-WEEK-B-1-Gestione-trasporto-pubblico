@@ -14,11 +14,12 @@ public class PuntoVenditaDAO {
     }
 
     // --------- SAVE ---------
-    public void savePuntoVendita(PuntoVendita p) {
+    public void save(PuntoVendita p) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(p);
         transaction.commit();
+        System.out.println("Il punto di vendita con id: " + p.getId()+ " "  + " è stato correttamente salvato!");
     }
 
     // --------- FIND BY ID  ---------

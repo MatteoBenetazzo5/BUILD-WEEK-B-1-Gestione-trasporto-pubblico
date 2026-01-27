@@ -5,10 +5,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import team3.dao.MezziDiTrasportoDAO;
 import team3.dao.PeriodiDiServizioDAO;
-import team3.entities.MezzoDiTrasporto;
-import team3.entities.PeriodoDiServizio;
-import team3.entities.StatoServizio;
-import team3.entities.TipoMezzoDiTrasporto;
+import team3.dao.PuntoVenditaDAO;
+import team3.entities.*;
 import team3.exceptions.NotFoundException;
 import team3.exceptions.NotFoundIdException;
 
@@ -34,7 +32,16 @@ public class Application {
                 TRAM,
                 50
         );
-        //mezzoDAO.save(mezzo);
+        mezzoDAO.save(mezzo);
+
+        // PUNTO DI VENDITA
+
+        PuntoVenditaDAO puntoDiVenditaDAO = new PuntoVenditaDAO(em);
+
+        PuntoVendita puntoDiVendita = new PuntoVendita(StatoPuntoVendita.ATTIVO, TipoPuntoVendita.DISTRIBUTORE);
+
+        PuntoVenditaDAO.save(puntoDiVendita);
+
 
         // Cerco il tipo di mezzo dato un id presente nel DB
         try {
