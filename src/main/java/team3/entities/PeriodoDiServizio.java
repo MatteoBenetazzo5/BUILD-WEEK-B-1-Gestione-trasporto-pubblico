@@ -34,9 +34,11 @@ public class PeriodoDiServizio {
     }
     // getter e setter
 
-    public PeriodoDiServizio(StatoServizio statoServizio, MezzoDiTrasporto mezzo, LocalDate dataInizio, LocalDate dataFine) {
+    public PeriodoDiServizio(StatoServizio statoServizio, MezzoDiTrasporto mezzo, LocalDate dataInizio,
+                             LocalDate dataFine, String causaManutenzione) {
         this.statoServizio = statoServizio;
         this.mezzo = mezzo;
+        this.causaManutenzione = causaManutenzione;
         // Faccio dei controlli sulle date (la data di inizio non deve essere null
         // e la data di fine deve essere successiva a quella di inizio
         if (dataInizio == null) {

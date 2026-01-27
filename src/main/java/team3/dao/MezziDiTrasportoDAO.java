@@ -3,14 +3,10 @@ package team3.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-import team3.entities.PeriodoDiServizio;
-import team3.entities.StatoServizio;
 import team3.entities.TipoMezzoDiTrasporto;
-
 import team3.entities.MezzoDiTrasporto;
 import team3.exceptions.NotFoundIdException;
 
-import java.util.List;
 import java.util.UUID;
 
 
