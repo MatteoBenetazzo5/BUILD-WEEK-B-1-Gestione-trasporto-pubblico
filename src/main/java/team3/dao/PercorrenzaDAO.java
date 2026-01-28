@@ -6,7 +6,7 @@ import jakarta.persistence.TypedQuery;
 import team3.entities.MezzoDiTrasporto;
 import team3.entities.Percorrenza;
 import team3.entities.Tratta;
-import team3.exceptions.NotFoundException;
+import team3.exceptions.NotFoundIdException;
 
 import java.util.List;
 import java.util.UUID;
@@ -41,22 +41,22 @@ public class PercorrenzaDAO {
     }
 
     // 3)  CERCO TRATTA PER ID
-    public Tratta findTrattaById(String trattaId) {
-        Tratta found = em.find(Tratta.class, UUID.fromString(trattaId));
-        if (found == null) throw new NotFoundException(trattaId);
+    public Tratta findTrattaById(UUID trattaId) {
+        Tratta found = em.find(Tratta.class, trattaId);
+        if (found == null) throw new NotFoundIdException(trattaId);
         return found;
     }
 
     // 4) CREA E SALVA PERCORRENZA COLLEGANDO UNA TRATTA GIÀ ESISTENTE
 
-    public void createAndSave(MezzoDiTrasporto mezzo, String trattaId, int minutiEffettivi) {
+    public void createAndSave(MezzoDiTrasporto mezzo, UUID trattaId, int minutiEffettivi) {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
 
-        Tratta tratta = em.find(Tratta.class, UUID.fromString(trattaId));
+        Tratta tratta = em.find(Tratta.class, trattaId);
         if (tratta == null) {
             transaction.rollback();
-            throw new NotFoundException("Tratta non trovata: " + trattaId);
+            throw new NotFoundIdException(trattaId);
         }
 
         Percorrenza p = new Percorrenza(mezzo, tratta, minutiEffettivi);
@@ -90,9 +90,9 @@ public class PercorrenzaDAO {
     }
 
     // 6) PERCORRENZA: RICERCA PER ID
-    public Percorrenza findById(String percorrenzaId) {
-        Percorrenza found = em.find(Percorrenza.class, UUID.fromString(percorrenzaId));
-        if (found == null) throw new NotFoundException(percorrenzaId);
+    public Percorrenza findById(UUID percorrenzaId) {
+        Percorrenza found = em.find(Percorrenza.class, percorrenzaId);
+        if (found == null) throw new NotFoundIdException(percorrenzaId);
         return found;
     }
 
@@ -103,7 +103,7 @@ public class PercorrenzaDAO {
     }
 
     // 8) ADMIN : TEMPO MEDIO EFFETTIVO su tratta+mezzo
-    public double getTempoMedioEffettivo(MezzoDiTrasporto mezzo, String trattaId) {
+    public double getTempoMedioEffettivo(MezzoDiTrasporto mezzo, UUID trattaId) {
         Tratta tratta = findTrattaById(trattaId);
 
         TypedQuery<Double> query = em.createQuery(
@@ -118,14 +118,14 @@ public class PercorrenzaDAO {
     }
 
     // 9) DELETE
-    public void findByIdAndDelete(String percorrenzaId) {
+    public void findByIdAndDelete(UUID percorrenzaId) {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
 
-        Percorrenza found = em.find(Percorrenza.class, UUID.fromString(percorrenzaId));
+        Percorrenza found = em.find(Percorrenza.class, percorrenzaId);
         if (found == null) {
             transaction.rollback();
-            throw new NotFoundException(percorrenzaId);
+            throw new NotFoundIdException(percorrenzaId);
         }
 
         em.remove(found);
