@@ -63,11 +63,31 @@ public class Application {
         MezziDiTrasportoDAO mezzoDAO = new MezziDiTrasportoDAO(em);
 
 
-        //MezzoDiTrasporto mezzo = new MezzoDiTrasporto(
-            //    TRAM,
-           //     50
-     //   );
+        MezzoDiTrasporto mezzo = new MezzoDiTrasporto(
+                TRAM,
+                50
+        );
+        MezzoDiTrasporto mezzo2 = new MezzoDiTrasporto(
+                AUTOBUS,
+                250
+        );
+        MezzoDiTrasporto mezzo3 = new MezzoDiTrasporto(
+                TRAM,
+                10
+        );
+        MezzoDiTrasporto mezzo4 = new MezzoDiTrasporto(
+                AUTOBUS,
+                60
+        );
+        MezzoDiTrasporto mezzo5 = new MezzoDiTrasporto(
+                AUTOBUS,
+                120
+        );
       //  mezzoDAO.save(mezzo);
+//          mezzoDAO.save(mezzo2);
+//          mezzoDAO.save(mezzo3);
+//          mezzoDAO.save(mezzo4);
+//          mezzoDAO.save(mezzo5);
 
         //PUNTO DI VENDITA
         PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
@@ -77,7 +97,7 @@ public class Application {
         PuntoVendita puntoVendita3 = new PuntoVendita(null, TipoPuntoVendita.RIVENDITORE);
         PuntoVendita puntoVendita4 = new PuntoVendita(null,TipoPuntoVendita.RIVENDITORE);
 
-        //puntoVenditaDAO.save(puntoVendita1);
+        // puntoVenditaDAO.save(puntoVendita1);
        // puntoVenditaDAO.save(puntoVendita2);
        // puntoVenditaDAO.save(puntoVendita3);
        // puntoVenditaDAO.save(puntoVendita4);
@@ -108,24 +128,54 @@ public class Application {
         // PERIODO DI SERVIZIO
 
         PeriodiDiServizioDAO periodiDAO = new PeriodiDiServizioDAO(em);
-        // uso l'uuid di un record che ho nel DB
-        UUID idMezzo = UUID.fromString("690ec275-f589-4b7d-bba8-7efe9bd7737f");
-        MezzoDiTrasporto mezzo1 = mezzoDAO.findById(idMezzo);
+        // Prendo gli id di vari mezzi di trasporto registrati nel DB
 
-        PeriodoDiServizio p1 = new PeriodoDiServizio(
+        List<MezzoDiTrasporto> mezziDiTrasportoList = mezzoDAO.findAllMezzi();
+        MezzoDiTrasporto mezzo2Item = mezziDiTrasportoList.get(2);
+        MezzoDiTrasporto mezzo3Item = mezziDiTrasportoList.get(3);
+        MezzoDiTrasporto mezzo4Item = mezziDiTrasportoList.get(4);
+        MezzoDiTrasporto mezzo5Item = mezziDiTrasportoList.get(5);
+
+
+        PeriodoDiServizio p2 = new PeriodoDiServizio(
+                StatoServizio.IN_MANUTENZIONE,
+                mezzo3Item,
+                LocalDate.of(2025, 10, 16),
+                null,
+                "Aggiunta di nuovi posti a sedere"
+        );
+        PeriodoDiServizio p3 = new PeriodoDiServizio(
                 StatoServizio.IN_SERVIZIO,
-                mezzo1,
+                mezzo2Item,
+                LocalDate.of(2026, 1, 15),
+                null,
+                null
+        );
+        PeriodoDiServizio p4 = new PeriodoDiServizio(
+                StatoServizio.IN_SERVIZIO,
+                mezzo4Item,
                 LocalDate.of(2026, 1, 6),
                 null,
                 null
         );
+        PeriodoDiServizio p5 = new PeriodoDiServizio(
+                StatoServizio.IN_MANUTENZIONE,
+                mezzo5Item,
+                LocalDate.of(2025, 12, 1),
+                LocalDate.of(2025, 12, 31),
+                "Guasto al motore"
+        );
 
      //   periodiDAO.save(p1);
+           periodiDAO.save(p2);
+           periodiDAO.save(p3);
+           periodiDAO.save(p4);
+           periodiDAO.save(p5);
 
         try {
             // Lista dei periodi di servizio dato l'id
             System.out.println("\nPeriodi di servizio: ");
-            List<PeriodoDiServizio> periodiServizioLista = periodiDAO.getPeriodiDiServizio(idMezzo);
+            List<PeriodoDiServizio> periodiServizioLista = periodiDAO.getPeriodiDiServizio(mezzo2Item.getIdMezzi());
             if (periodiServizioLista.isEmpty()) {
                 System.out.println("Non sono registrati periodi di servizio per questo mezzo.");
             } else {
@@ -136,7 +186,7 @@ public class Application {
 
             // Lista dei periodi di manutenzione dato l'id
             System.out.println("\nPeriodi di manutenzione: ");
-            List<PeriodoDiServizio> periodiManutenzioneLista = periodiDAO.getPeriodiDiManutenzione(idMezzo);
+            List<PeriodoDiServizio> periodiManutenzioneLista = periodiDAO.getPeriodiDiManutenzione(mezzo2Item.getIdMezzi());
             if (periodiManutenzioneLista.isEmpty()) {
                 System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
         } else {
