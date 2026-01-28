@@ -3,8 +3,12 @@ package team3.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.TypedQuery;
 import team3.entities.Biglietto;
+import team3.entities.Percorrenza;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class BigliettiDAO {
 
@@ -27,6 +31,10 @@ public class BigliettiDAO {
 
        System.out.println("Il biglietto con id: " + b.getIdBiglietto()+ " "  + " è stato correttamente salvato!");
    }
+    public List<Biglietto> findAllBiglietti() {
+        TypedQuery<Biglietto> query = em.createQuery("SELECT p FROM biglietti p", Biglietto.class);
+        return query.getResultList();
+    }
 
     public long countBigliettiVidimatiPeriodo(
             LocalDateTime from,
