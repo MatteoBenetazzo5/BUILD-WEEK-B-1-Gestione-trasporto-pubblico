@@ -64,4 +64,12 @@ public class PuntoVendita {
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "PuntoVendita" +
+                "\nid: " + id +
+                ", tipoPuntoVendita: " + tipoPuntoVendita +
+                ", statoPuntoVendita: " + statoPuntoVendita;
+    }
 }
