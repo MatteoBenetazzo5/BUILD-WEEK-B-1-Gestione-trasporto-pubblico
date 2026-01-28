@@ -2,8 +2,11 @@ package team3.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+import team3.entities.MezzoDiTrasporto;
 import team3.entities.PuntoVendita;
 
+import java.util.List;
 import java.util.UUID;
 
 public class PuntoVenditaDAO {
@@ -47,6 +50,14 @@ public class PuntoVenditaDAO {
         tx.commit();
 
         return true;
+    }
+
+    // prendo la lista di tutti i punti vendita
+
+    public List<PuntoVendita> findAllPuntiVendita() {
+        TypedQuery<PuntoVendita> query = entityManager.createQuery
+                ("SELECT p FROM PuntoVendita p", PuntoVendita.class);
+        return query.getResultList();
     }
 
 }

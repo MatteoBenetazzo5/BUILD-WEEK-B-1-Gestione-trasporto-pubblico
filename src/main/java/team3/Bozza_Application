@@ -1,0 +1,165 @@
+import java.util.Scanner;
+
+public class Application {
+
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        boolean running = true;
+
+        while (running) {
+            System.out.println("AZIENDA DI TRASPORTO PUBBLICO");
+            System.out.println("1 - Utente");
+            System.out.println("2 - Amministratore");
+            System.out.println("0 - Esci");
+            System.out.print("Scelta: ");
+
+            int scelta = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (scelta) {
+                case 1:
+                    menuUtente();
+                    break;
+                case 2:
+                    menuAmministratore();
+                    break;
+                case 0:
+                    running = false;
+                    System.out.println("Uscita dal sistema, arrivederci e a presto!");
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    // MENU UTENTE
+
+    private static void menuUtente() {
+        boolean back = false;
+
+        while (!back) {
+            System.out.println(""Benvenuto nel Menu Utente!, cosa desidera fare?"");
+            System.out.println("1 - ...");
+            System.out.println("2 - ...");
+            System.out.println("3 - ...");
+            System.out.println("0 - Torna indietro");
+            System.out.print("Scelta: ");
+
+            int scelta = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (scelta) {
+                case 1:
+                    ...;
+                    break;
+                case 2:
+                    ...;
+                    break;
+                case 3:
+                    ...;
+                    break;
+                case 0:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta!");
+            }
+        }
+    }
+
+    // MENU AMMINISTRATORE
+
+    private static void menuAmministratore() {
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("\n--- "Benvenuto nel Menu amministratore!, cosa desidera gestire?" ---");
+            System.out.println("1 - ...");
+            System.out.println("2 - ...");
+            System.out.println("3 - ...");
+            System.out.println("4 - ...");
+            System.out.println("5 - ...");
+            System.out.println("6 - ...");
+            System.out.println("0 - Torna indietro");
+            System.out.print("Scelta: ");
+
+            int scelta = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (scelta) {
+                case 1:
+                    ...;
+                    break;
+                case 2:
+                    ...;
+                    break;
+                case 3:
+                    ...;
+                    break;
+                case 4:
+                    ...;
+                    break;
+                case 5:
+                    ...;
+                    break;
+                case 6:
+                    ...;
+                    break;
+                case 0:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta!");
+            }
+        }
+    }
+
+
+
+    // METODI UTENTE
+
+    private static void ... {
+
+    }
+
+    private static void ... {
+
+    }
+
+    private static void ... {
+
+    }
+
+
+
+    // METODI AMMINISTRATORE
+
+    private static void ... {
+
+    }
+
+    private static void ... {
+
+    }
+
+    private static void ... {
+
+    }
+
+    private static void ... {
+
+    }
+
+    private static void ... {
+
+    }
+
+    private static void ... {
+
+    }
+}

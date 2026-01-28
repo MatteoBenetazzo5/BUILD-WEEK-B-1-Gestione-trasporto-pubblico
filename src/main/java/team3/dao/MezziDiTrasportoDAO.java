@@ -3,10 +3,13 @@ package team3.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import jakarta.persistence.TypedQuery;
+import team3.entities.Percorrenza;
 import team3.entities.TipoMezzoDiTrasporto;
 import team3.entities.MezzoDiTrasporto;
 import team3.exceptions.NotFoundIdException;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -57,5 +60,11 @@ public class MezziDiTrasportoDAO {
         return findById(idMezzi).getTipoDiMezzo();
     }
 
+    // Ritorno una lista con tutti i mezzi di trasporto
+    public List<MezzoDiTrasporto> findAllMezzi() {
+        TypedQuery<MezzoDiTrasporto> query = entityManager.createQuery
+                ("SELECT m FROM MezzoDiTrasporto m", MezzoDiTrasporto.class);
+        return query.getResultList();
+    }
 
 }
