@@ -121,5 +121,15 @@ public class PeriodoDiServizio {
         this.causaManutenzione = causaManutenzione;
     }
 
+    @Override
+    public String toString() {
+        return "PeriodoDiServizio" +
+                "\nid: " + id +
+                ", statoServizio: " + statoServizio +
+                ", mezzo: " + mezzo +
+                ", dataInizio: " + dataInizio +
+                ", dataFine: " + dataFine +
+                ", causaManutenzione: '" + causaManutenzione ;
+    }
 }
 
