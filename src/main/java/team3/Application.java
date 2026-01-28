@@ -109,7 +109,7 @@ public class Application {
 
         PeriodiDiServizioDAO periodiDAO = new PeriodiDiServizioDAO(em);
         // uso l'uuid di un record che ho nel DB
-        UUID idMezzo = UUID.fromString("347dab0e-009e-4c87-8c92-804b25f6c5e5");
+        UUID idMezzo = UUID.fromString("690ec275-f589-4b7d-bba8-7efe9bd7737f");
         MezzoDiTrasporto mezzo1 = mezzoDAO.findById(idMezzo);
 
         PeriodoDiServizio p1 = new PeriodoDiServizio(
@@ -125,22 +125,28 @@ public class Application {
         try {
             // Lista dei periodi di servizio dato l'id
             System.out.println("\nPeriodi di servizio: ");
-            periodiDAO.getPeriodiDiServizio(idMezzo).forEach(p ->
-                    System.out.println("Date di inizio servizio: " + p.getDataInizio())
-            );
+            List<PeriodoDiServizio> periodiServizioLista = periodiDAO.getPeriodiDiServizio(idMezzo);
+            if (periodiServizioLista.isEmpty()) {
+                System.out.println("Non sono registrati periodi di servizio per questo mezzo.");
+            } else {
+                periodiServizioLista.forEach(p ->
+                        System.out.println("Date di inizio servizio: " + p.getDataInizio())
+                );
+            }
 
             // Lista dei periodi di manutenzione dato l'id
             System.out.println("\nPeriodi di manutenzione: ");
-            periodiDAO.getPeriodiDiManutenzione(idMezzo).forEach(p ->
-                    System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
-                            "\nDate di inizio manutenzione: " + p.getDataInizio() +
-                            " date di fine: " + p.getDataFine())
-            );
-
+            List<PeriodoDiServizio> periodiManutenzioneLista = periodiDAO.getPeriodiDiManutenzione(idMezzo);
+            if (periodiManutenzioneLista.isEmpty()) {
+                System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
+        } else {
+                periodiManutenzioneLista.forEach(p ->
+                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
+                                "\nDate di inizio manutenzione: " + p.getDataInizio() +
+                                " date di fine: " + p.getDataFine())
+                );
+            }
         } catch (NotFoundIdException ex) {
             System.out.println(ex.getMessage());
         }
-
-
-
 }}
