@@ -199,4 +199,47 @@ public class Application {
         } catch (NotFoundIdException ex) {
             System.out.println(ex.getMessage());
         }
-}}
+
+        // TRATTE E PERCORRENZE
+
+
+//        PercorrenzaDAO percorrenzaDAO = new PercorrenzaDAO(em);
+//
+////  CREO UNA TRATTA + UNA PRIMA PERCORRENZA
+//        percorrenzaDAO.createTrattaAndPercorrenza(
+//                mezzoRecuperato,
+//                "Stazione Centrale",
+//                "Aeroporto",
+//                35,   // tempo previsto
+//                40    // tempo effettivo
+//        );
+//
+////  RECUPERO LA TRATTA APPENA CREATA
+//        Tratta trattaCreata = percorrenzaDAO.findAllPercorrenze()
+//                .getLast()               // ultima percorrenza inserita
+//                .getTratta();
+//
+////  AGGIUNGO ALTRE PERCORRENZE SULLA STESSA TRATTA
+//        percorrenzaDAO.createAndSave(mezzoRecuperato, trattaCreata.getId_tratta(), 38);
+//        percorrenzaDAO.createAndSave(mezzoRecuperato, trattaCreata.getId_tratta(), 36);
+//        percorrenzaDAO.createAndSave(mezzoRecuperato, trattaCreata.getId_tratta(), 42);
+//
+////  STAMPO TUTTE LE PERCORRENZE
+//        System.out.println("\n--- LISTA PERCORRENZE ---");
+//        percorrenzaDAO.findAllPercorrenze().forEach(p ->
+//                System.out.println(
+//                        "Percorrenza " + p.getId_percorrenze()
+//                                + " | Mezzo: " + p.getMezzo().getTipoDiMezzo()
+//                                + " | Tratta: " + p.getTratta().getZona_partenza()
+//                                + " - " + p.getTratta().getCapolinea()
+//                                + " | Minuti effettivi: " + p.getMinuti_effettivi()
+//                )
+//        );
+//
+////  CALCOLO TEMPO MEDIO EFFETTIVO
+//        double media = percorrenzaDAO.getTempoMedioEffettivo(mezzoRecuperato, trattaCreata.getId_tratta());
+//        System.out.println("\nTempo medio effettivo sulla tratta: " + media + " minuti");
+
+
+
+    }}
