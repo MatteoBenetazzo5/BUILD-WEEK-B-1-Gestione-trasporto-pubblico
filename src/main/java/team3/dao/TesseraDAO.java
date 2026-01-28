@@ -3,6 +3,7 @@ package team3.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import team3.entities.Percorrenza;
 import team3.entities.Tessera;
 
 import java.util.List;
@@ -35,6 +36,12 @@ public class TesseraDAO {
         query.setParameter("cod", codiceTessera);
 
        return !query.getResultList().isEmpty();
+    }
+
+    // 7) TESSERA: TROVO TUTTE
+    public List<Tessera> findAllTessere() {
+        TypedQuery<Tessera> query = entityManager.createQuery("SELECT t FROM Tessera t", Tessera.class);
+        return query.getResultList();
     }
 
     public Tessera findByCodiceTessera(String codiceTessera) {

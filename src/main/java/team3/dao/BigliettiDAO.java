@@ -3,13 +3,12 @@ package team3.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.TypedQuery;
 import team3.entities.Biglietto;
-import team3.entities.MezzoDiTrasporto;
+import team3.entities.Percorrenza;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public class BigliettiDAO {
 
@@ -32,6 +31,10 @@ public class BigliettiDAO {
 
        System.out.println("Il biglietto con id: " + b.getIdBiglietto()+ " "  + " è stato correttamente salvato!");
    }
+    public List<Biglietto> findAllBiglietti() {
+        TypedQuery<Biglietto> query = em.createQuery("SELECT b FROM biglietti b", Biglietto.class);
+        return query.getResultList();
+    }
 
     public long countBigliettiVidimatiPeriodo(
             LocalDateTime from,
@@ -55,8 +58,8 @@ public class BigliettiDAO {
             et.commit();
             return count.longValue();
 
-        } catch (PersistenceException e) {
-            if (et.isActive()) et.rollback();
+        } catch (PersistenceException e) { // query fallita o connessione rotta entriamo nel catch (persistenceexception)
+            if (et.isActive()) et.rollback(); //et.isactive controlla se la connessione e' ancora aperta, se lo e' rollback annulla tutte le transizioni fino a questo punto
             throw new RuntimeException("errore nel conteggio dei biglietti vidimati nel periodo", e);
         }
     }
