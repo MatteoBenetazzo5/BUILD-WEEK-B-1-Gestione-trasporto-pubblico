@@ -4,12 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import team3.entities.Biglietto;
-import team3.entities.MezzoDiTrasporto;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 public class BigliettiDAO {
 
@@ -55,8 +50,8 @@ public class BigliettiDAO {
             et.commit();
             return count.longValue();
 
-        } catch (PersistenceException e) {
-            if (et.isActive()) et.rollback();
+        } catch (PersistenceException e) { // query fallita o connessione rotta entriamo nel catch (persistenceexception)
+            if (et.isActive()) et.rollback(); //et.isactive controlla se la connessione e' ancora aperta, se lo e' rollback annulla tutte le transizioni fino a questo punto
             throw new RuntimeException("errore nel conteggio dei biglietti vidimati nel periodo", e);
         }
     }
