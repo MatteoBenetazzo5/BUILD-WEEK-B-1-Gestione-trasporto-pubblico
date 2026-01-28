@@ -32,7 +32,7 @@ public class BigliettiDAO {
        System.out.println("Il biglietto con id: " + b.getIdBiglietto()+ " "  + " è stato correttamente salvato!");
    }
     public List<Biglietto> findAllBiglietti() {
-        TypedQuery<Biglietto> query = em.createQuery("SELECT p FROM biglietti p", Biglietto.class);
+        TypedQuery<Biglietto> query = em.createQuery("SELECT b FROM biglietti b", Biglietto.class);
         return query.getResultList();
     }
 
