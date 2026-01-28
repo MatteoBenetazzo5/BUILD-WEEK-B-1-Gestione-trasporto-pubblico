@@ -1,8 +1,10 @@
 package team3.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import team3.entities.Abbonamento;
+import team3.entities.Biglietto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +19,15 @@ public class AbbonamentoDAO {
         this.em = em;
     }
 
+    public void save(Abbonamento a) {
+
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.persist(a);
+        transaction.commit();
+
+        System.out.println("L'abbonamento con il codice: " + a.getCodiceUnivoco()+ " "  + " è stato correttamente salvato!");
+    }
     // 1) VALIDITA ABBONAMENTO
     // ritorna true se esiste almeno un abbonamento attivo per quella tessera in quella data
     public boolean isAbbonamentoValido(String codiceTessera, LocalDate dataControllo) {
