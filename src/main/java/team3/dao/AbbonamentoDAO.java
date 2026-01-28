@@ -2,9 +2,12 @@ package team3.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import team3.entities.Abbonamento;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+
 
 public class AbbonamentoDAO {
 
@@ -50,4 +53,13 @@ public class AbbonamentoDAO {
                 .setParameter("end", end)
                 .getSingleResult();
     }
+
+    // 3) RECUPERA TUTTI GLI ABBONAMENTI
+    public List<Abbonamento> findAllAbbonamenti() {
+        return em.createQuery(
+                "SELECT a FROM Abbonamento a",
+                Abbonamento.class
+        ).getResultList();
+    }
+
 }
