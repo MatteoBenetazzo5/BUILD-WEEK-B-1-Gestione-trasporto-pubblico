@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import team3.dao.*;
 import team3.entities.*;
-import team3.exceptions.NotFoundException;
 import team3.exceptions.NotFoundIdException;
 
 import java.time.LocalDate;
@@ -93,7 +92,7 @@ public class Application {
         try {
             TipoMezzoDiTrasporto tipo = mezzoDAO.getTipoById(UUID.fromString("690ec275-f589-4b7d-bba8-7efe9bd7737f"));
             System.out.println("Il tipo del mezzo è: " + tipo);
-        } catch (NotFoundException ex) {
+        } catch (NotFoundIdException ex) {
             System.out.println(ex.getMessage());
         }
 
