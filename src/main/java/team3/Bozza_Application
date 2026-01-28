@@ -1,10 +1,25 @@
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import team3.dao.AbbonamentoDAO;
+
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Application {
 
     private static Scanner scanner = new Scanner(System.in);
 
+    private static EntityManager em;
+    private static AbbonamentoDAO abbonamentoDAO;
+
     public static void main(String[] args) {
+
+        // ENTITY MANAGER
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("NOME_PERSISTENCE_UNIT");
+        em = emf.createEntityManager();
+
+        abbonamentoDAO = new AbbonamentoDAO(em);
 
         boolean running = true;
 
@@ -34,6 +49,8 @@ public class Application {
             }
         }
 
+        em.close();
+        emf.close();
         scanner.close();
     }
 
@@ -43,7 +60,7 @@ public class Application {
         boolean back = false;
 
         while (!back) {
-            System.out.println(""Benvenuto nel Menu Utente!, cosa desidera fare?"");
+            System.out.println("Benvenuto nel Menu Utente!, cosa desidera fare?");
             System.out.println("1 - ...");
             System.out.println("2 - ...");
             System.out.println("3 - ...");
@@ -55,13 +72,13 @@ public class Application {
 
             switch (scelta) {
                 case 1:
-                    ...;
+                    // ...
                     break;
                 case 2:
-                    ...;
+                    // ...
                     break;
                 case 3:
-                    ...;
+                    // ...
                     break;
                 case 0:
                     back = true;
@@ -78,9 +95,9 @@ public class Application {
         boolean back = false;
 
         while (!back) {
-            System.out.println("\n--- "Benvenuto nel Menu amministratore!, cosa desidera gestire?" ---");
+            System.out.println("Benvenuto nel Menu amministratore!, cosa desidera gestire?");
             System.out.println("1 - ...");
-            System.out.println("2 - ...");
+            System.out.println("2 - Verifica abbonamento per tessera");
             System.out.println("3 - ...");
             System.out.println("4 - ...");
             System.out.println("5 - ...");
@@ -93,22 +110,22 @@ public class Application {
 
             switch (scelta) {
                 case 1:
-                    ...;
+                    // ...
                     break;
                 case 2:
-                    ...;
+                    verificaAbbonamentoAdmin();
                     break;
                 case 3:
-                    ...;
+                    // ...
                     break;
                 case 4:
-                    ...;
+                    // ...
                     break;
                 case 5:
-                    ...;
+                    // ...
                     break;
                 case 6:
-                    ...;
+                    // ...
                     break;
                 case 0:
                     back = true;
@@ -119,47 +136,56 @@ public class Application {
         }
     }
 
-
-
     // METODI UTENTE
 
-    private static void ... {
+    private static void metodoUtente1() {
 
     }
 
-    private static void ... {
+    private static void metodoUtente2() {
 
     }
 
-    private static void ... {
+    private static void metodoUtente3() {
 
     }
-
-
 
     // METODI AMMINISTRATORE
 
-    private static void ... {
+    private static void metodoAdmin1() {
 
     }
 
-    private static void ... {
+    private static void verificaAbbonamentoAdmin() {
+
+        System.out.println("Inserisci codice tessera:");
+        String codiceTessera = scanner.nextLine();
+
+        LocalDate oggi = LocalDate.now();
+
+        boolean valido = abbonamentoDAO.isAbbonamentoValido(codiceTessera, oggi);
+
+        if (valido) {
+            System.out.println("Abbonamento VALIDO");
+        } else {
+            System.out.println("Abbonamento NON valido o assente");
+        }
+    }
+
+    private static void metodoAdmin3() {
 
     }
 
-    private static void ... {
+    private static void metodoAdmin4() {
 
     }
 
-    private static void ... {
+    private static void metodoAdmin5() {
 
     }
 
-    private static void ... {
-
-    }
-
-    private static void ... {
+    private static void metodoAdmin6() {
 
     }
 }
+
