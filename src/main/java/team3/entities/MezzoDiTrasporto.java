@@ -52,4 +52,12 @@ public class MezzoDiTrasporto {
         return periodo;
     }
 
+    @Override
+    public String toString() {
+        return "MezzoDiTrasporto" +
+                "\nidMezzi: " + idMezzi +
+                ", tipoDiMezzo: " + tipoDiMezzo +
+                ", periodo: " + periodo +
+                ", capienza: " + capienza ;
+    }
 }
