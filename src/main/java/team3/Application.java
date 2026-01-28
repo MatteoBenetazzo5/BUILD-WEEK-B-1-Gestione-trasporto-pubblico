@@ -109,7 +109,7 @@ public class Application {
 
         PeriodiDiServizioDAO periodiDAO = new PeriodiDiServizioDAO(em);
         // uso l'uuid di un record che ho nel DB
-        UUID idMezzo = UUID.fromString("690ec275-f589-4b7d-bba8-7efe9bd7737f");
+        UUID idMezzo = UUID.fromString("347dab0e-009e-4c87-8c92-804b25f6c5e5");
         MezzoDiTrasporto mezzo1 = mezzoDAO.findById(idMezzo);
 
         PeriodoDiServizio p1 = new PeriodoDiServizio(
