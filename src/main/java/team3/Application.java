@@ -7,7 +7,9 @@ import team3.dao.*;
 import team3.entities.*;
 import team3.exceptions.NotFoundIdException;
 
+import java.awt.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static team3.entities.TipoMezzoDiTrasporto.AUTOBUS;
@@ -80,13 +82,20 @@ public class Application {
        // puntoVenditaDAO.save(puntoVendita3);
        // puntoVenditaDAO.save(puntoVendita4);
 
+       List <PuntoVendita> puntiVendita = puntoVenditaDAO.findAllPuntiVendita();
+       PuntoVendita puntoVenditaRecuperato = puntiVendita.getFirst();
+
+
+       List <MezzoDiTrasporto> mezziDiTrasporto = mezzoDAO.findAllMezzi();
+       MezzoDiTrasporto mezzoRecuperato = mezziDiTrasporto.getFirst();
+
+
         //BIGLIETTO
-        PuntoVendita puntoVendita1 = puntoVenditaDAO.findById(UUID.fromString("03ca3045-4470-4943-be2d-03339f96b5be"));
-        MezzoDiTrasporto mezzo = mezzoDAO.findById(UUID.fromString("b9da2f59-3544-4bbf-affa-78a9c78c4f97"));
         BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
 
-        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVendita1,mezzo);
+        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
             //bigliettiDAO.save(biglietto1);
+
 
         // Cerco il tipo di mezzo dato un id presente nel DB
         try {
