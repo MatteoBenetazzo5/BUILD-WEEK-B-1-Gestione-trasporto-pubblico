@@ -131,10 +131,10 @@ public class Application {
         // Prendo gli id di vari mezzi di trasporto registrati nel DB
 
         List<MezzoDiTrasporto> mezziDiTrasportoList = mezzoDAO.findAllMezzi();
-        MezzoDiTrasporto mezzo2Item = mezziDiTrasportoList.get(2);
-        MezzoDiTrasporto mezzo3Item = mezziDiTrasportoList.get(3);
-        MezzoDiTrasporto mezzo4Item = mezziDiTrasportoList.get(4);
-        MezzoDiTrasporto mezzo5Item = mezziDiTrasportoList.get(5);
+        MezzoDiTrasporto mezzo2Item = mezziDiTrasportoList.get(1);
+        MezzoDiTrasporto mezzo3Item = mezziDiTrasportoList.get(2);
+        MezzoDiTrasporto mezzo4Item = mezziDiTrasportoList.get(3);
+        MezzoDiTrasporto mezzo5Item = mezziDiTrasportoList.get(4);
 
 
         PeriodoDiServizio p2 = new PeriodoDiServizio(
@@ -204,8 +204,8 @@ public class Application {
 
 
         PercorrenzaDAO percorrenzaDAO = new PercorrenzaDAO(em);
-////
-//////  CREO UNA TRATTA + UNA PRIMA PERCORRENZA
+
+////  CREO UNA TRATTA + UNA PRIMA PERCORRENZA
 //        percorrenzaDAO.createTrattaAndPercorrenza(
 //                mezzo2Item,
 //                "Stazione Nord",
@@ -213,18 +213,18 @@ public class Application {
 //                37,   // tempo previsto
 //                42    // tempo effettivo
 //        );
-//
-//////  RECUPERO LA TRATTA APPENA CREATA
+
+////  RECUPERO LA TRATTA APPENA CREATA
 //        Tratta trattaCreata = percorrenzaDAO.findAllPercorrenze()
 //                .getLast()               // ultima percorrenza inserita
 //                .getTratta();
 
-////  AGGIUNGO ALTRE PERCORRENZE SULLA STESSA TRATTA
+//  AGGIUNGO ALTRE PERCORRENZE SULLA STESSA TRATTA
 //        percorrenzaDAO.createAndSave(mezzoRecuperato, trattaCreata.getId_tratta(), 38);
 //        percorrenzaDAO.createAndSave(mezzoRecuperato, trattaCreata.getId_tratta(), 36);
 //        percorrenzaDAO.createAndSave(mezzoRecuperato, trattaCreata.getId_tratta(), 42);
 
-////  STAMPO TUTTE LE PERCORRENZE
+//  STAMPO TUTTE LE PERCORRENZE
 //        System.out.println("\n--- LISTA PERCORRENZE ---");
 //        percorrenzaDAO.findAllPercorrenze().forEach(p ->
 //                System.out.println(
@@ -236,10 +236,10 @@ public class Application {
 //                )
 //        );
 
-////  CALCOLO TEMPO MEDIO EFFETTIVO
+//  CALCOLO TEMPO MEDIO EFFETTIVO
 //        double media = percorrenzaDAO.getTempoMedioEffettivo(mezzoRecuperato, trattaCreata.getId_tratta());
 //        System.out.println("\nTempo medio effettivo sulla tratta: " + (int) Math.round(media)+ " minuti");
-//
+
 
 
     }}
