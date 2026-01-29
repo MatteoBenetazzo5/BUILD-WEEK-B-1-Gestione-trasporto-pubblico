@@ -6,6 +6,7 @@ import jakarta.persistence.Persistence;
 import team3.dao.*;
 import team3.entities.*;
 import team3.exceptions.NotFoundIdException;
+import java.util.Scanner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ import static team3.entities.TipoMezzoDiTrasporto.TRAM;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblicopu");
-
+    private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
 
         EntityManager em = emf.createEntityManager();
@@ -120,10 +121,10 @@ public class Application {
         AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
         Abbonamento abbonamento1 = new Abbonamento("CIAO3", TipoAbbonamento.MENSILE, LocalDate.now(),
                 LocalDate.now().plusMonths(1),tessera, puntoVenditaRecuperato );
-        abbonamentoDAO.save(abbonamento1);
+//        abbonamentoDAO.save(abbonamento1);
         Abbonamento abbonamento2 = new Abbonamento("LALALA7", TipoAbbonamento.SETTIMANALE, LocalDate.now(),
                 LocalDate.now().plusWeeks(2),tessera1, puntoVenditaRecuperato2 );
-        abbonamentoDAO.save(abbonamento2);
+//        abbonamentoDAO.save(abbonamento2);
 
 
         //BIGLIETTO
@@ -262,6 +263,278 @@ public class Application {
 //        double media = percorrenzaDAO.getTempoMedioEffettivo(mezzoRecuperato, trattaCreata.getId_tratta());
 //        System.out.println("\nTempo medio effettivo sulla tratta: " + (int) Math.round(media)+ " minuti");
 
+
+        boolean running = true;
+
+        while (running) {
+            System.out.println("AZIENDA DI TRASPORTO PUBBLICO");
+            System.out.println("Sei un utente o un amministratore?");
+            System.out.println("1 - Utente");
+            System.out.println("2 - Amministratore");
+            System.out.println("0 - Esci");
+            System.out.print("Scelta: ");
+
+            int scelta = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (scelta) {
+                case 1: // utente
+                    menuUtente();
+                    break;
+                case 2: // amministratore
+                    menuAmministratore();
+                    break;
+                case 0: // esci
+                    running = false;
+                    System.out.println("Uscita dal sistema, arrivederci e a presto!");
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta.");
+            }
+        }
+
+        em.close();
+        emf.close();
+        scanner.close();
+    }
+
+    // =========================
+    // MENU UTENTE (come schema)
+    // =========================
+    private static void menuUtente() {
+        boolean back = false;
+
+        while (!back) {
+
+            // dove ti trovi?
+            // 1) distributore automatico
+            // 2) rivenditore autorizzato
+            // poi: cosa vuoi fare? (biglietto / abbonamento / verifica validità)
+
+            System.out.println("UTENTE");
+            System.out.println("Dove ti trovi?");
+            System.out.println("1 - Distributore automatico");
+            System.out.println("2 - Rivenditore autorizzato");
+            System.out.println("0 - Torna indietro");
+            System.out.print("Scelta: ");
+
+            int luogo = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (luogo) {
+                case 1:
+                    // sei al distributore automatico
+                    // ora chiedi cosa vuoi fare (biglietto / abbonamento )
+
+                    menuAzioniUtenteDistributore();
+                    break;
+                case 2:
+                    // sei in rivenditore autorizzato
+                    // ora chiedi cosa vuoi fare (biglietto / abbonamento / verifica validità)
+                    menuAzioniUtenteRivenditore();
+                    break;
+                case 0:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta!");
+            }
+        }
+    }
+
+    // sottomenù: cosa vuoi fare? (come schema utente)
+    public static void menuAzioniUtenteDistributore() {
+        EntityManager em = emf.createEntityManager();
+        PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
+        List<PuntoVendita> puntiVendita = puntoVenditaDAO.findAllPuntiVendita();
+        PuntoVendita puntoVenditaRecuperato = puntiVendita.get(1); // distributore
+        PuntoVendita puntoVenditaRecuperato2 = puntiVendita.get(2); // rivenditore
+        MezziDiTrasportoDAO mezziDiTrasportoDAO = new MezziDiTrasportoDAO(em);
+        List<MezzoDiTrasporto> mezziDiTrasporto = mezziDiTrasportoDAO.findAllMezzi();
+        MezzoDiTrasporto mezzoRecuperato = mezziDiTrasporto.get(1);
+        MezzoDiTrasporto mezzoRecuperato2 = mezziDiTrasporto.get(2);
+        MezzoDiTrasporto mezzoRecuperato3 = mezziDiTrasporto.get(3);
+        TesseraDAO tesseraDAO = new TesseraDAO(em);
+
+
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("Cosa vuoi fare?");
+            System.out.println("1 - Fai biglietto");
+            System.out.println("2 - Fai abbonamento");
+            System.out.println("3 - Verifica validita abbonamento");
+            System.out.println("0 - Torna indietro");
+            System.out.print("Scelta: ");
+
+            int scelta = Integer.parseInt(scanner.nextLine());
+            scanner.nextLine();
+
+            switch (scelta) {
+                case 1:
+                    // schema: vuoi biglietto? -> genera biglietto dal distributore
+                    Biglietto bigliettoDistributore = new Biglietto("CVL20", LocalDate.now(), null,
+                            puntoVenditaRecuperato, mezzoRecuperato);
+                    break;
+                case 2:
+                    // schema: vuoi abbonamento? -> controllo validità tessera
+                    System.out.println("Inserisci il codice della tua tessera.");
+                    String numTessera = scanner.nextLine();
+                    Tessera tessera1 = tesseraDAO.findByCodiceTessera(numTessera);
+                   boolean valTessera = tesseraDAO.isValid(numTessera);
+                   if (valTessera) {
+                       System.out.println("La tua tessera è valida, ti genero l'abbonamento");
+                       Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT", TipoAbbonamento.MENSILE,
+                               LocalDate.now(), LocalDate.now().plusMonths(1), tessera1, puntoVenditaRecuperato);
+                       System.out.println("\nL'abbonamento con codice: " + abbonamentoDistributore.getCodiceUnivoco() +
+                               " è stato correttamente generato.");
+                   } else {
+                       System.out.println("Purtroppo la tua tessera è scaduta, creazione di una nuova tessera in corso.");
+                       Tessera nuovaTessera = new Tessera("TSSR", LocalDate.now(), LocalDate.now().plusYears(1),
+                              tessera1.getUtente() );
+                       System.out.println("\nLa tua nuova tessera con codice: " + nuovaTessera.getCodiceTessera() +
+                               " è stata correttamente creata.");
+                       // rimandare al case 2
+                   }
+                    break;
+                case 3:
+                    // schema: inserisci numero tessera -> valido/non valido
+                    // se non valido: vuoi rinnovarla? si/no
+                    // se valido: vuoi abbonamento? -> genera abbonamento
+                    // ...
+                    break;
+                case 0:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta!");
+            }
+        }
+    }
+
+    // =================================
+    // MENU AMMINISTRATORE (come schema)
+    // =================================
+    private static void menuAmministratore() {
+        boolean back = false;
+
+        while (!back) {
+
+            // admin: cosa vuoi visualizzare?
+            // biglietti / tessere emesse / mezzi / extra distributori / aggiungere cose
+            // + tua voce già corretta: verifica abbonamento per tessera
+
+            System.out.println("ADMIN");
+            System.out.println("Cosa vuoi visualizzare?");
+            System.out.println("1 - Biglietti");
+            System.out.println("2 - Verifica abbonamento per tessera");
+            System.out.println("3 - Tessere emesse");
+            System.out.println("4 - Mezzi");
+            System.out.println("5 - EXTRA: lista distributori attivi/non attivi");
+            System.out.println("6 - Aggiungere cose");
+            System.out.println("0 - Torna indietro");
+            System.out.print("Scelta: ");
+
+            int scelta = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (scelta) {
+                case 1:
+                    // apre sottomenù biglietti (come schema admin)
+                    // ...
+                    break;
+                case 2:
+                    // già collegato alla tua parte (DAO abbonamento)
+                    verificaAbbonamentoAdmin();
+                    break;
+                case 3:
+                    // schema: tessere emesse
+                    // ...
+                    break;
+                case 4:
+                    // apre sottomenù mezzi (periodi servizio/manutenzione, percorrenze/tempo medio)
+                    // ...
+                    break;
+                case 5:
+                    // schema extra: lista distributori attivi/non attivi
+                    // ...
+                    break;
+                case 6:
+                    // schema: aggiungere cose (creazioni/aggiunte varie)
+                    // ...
+                    break;
+                case 0:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta!");
+            }
+        }
+    }
+
+    // ======================
+    // METODI UTENTE (bozza)
+    // ======================
+
+    private static void metodoUtente1() {
+        // ...
+    }
+
+    private static void metodoUtente2() {
+        // ...
+    }
+
+    private static void metodoUtente3() {
+        // ...
+    }
+
+    // ==============================
+    // METODI AMMINISTRATORE (bozza)
+    // ==============================
+
+    private static void metodoAdmin1() {
+        // ...
+    }
+
+    // ============================
+    // SOLO PER LA TUA PARTE (DAO)
+    // ============================
+    private static void verificaAbbonamentoAdmin() {
+
+        // admin: verifica rapida abbonamento per codice tessera (come consegna)
+        // chiede codice tessera
+        // controlla se valido in base alla data odierna
+        // stampa valido / non valido
+
+        System.out.println("Inserisci codice tessera:");
+        String codiceTessera = scanner.nextLine();
+
+        LocalDate oggi = LocalDate.now();
+
+        boolean valido = abbonamentoDAO.isAbbonamentoValido(codiceTessera, oggi);
+
+        if (valido) {
+            System.out.println("Abbonamento VALIDO");
+        } else {
+            System.out.println("Abbonamento NON valido o assente");
+        }
+    }
+
+    private static void metodoAdmin3() {
+        // ...
+    }
+
+    private static void metodoAdmin4() {
+        // ...
+    }
+
+    private static void metodoAdmin5() {
+        // ...
+    }
+
+    private static void metodoAdmin6() {
+        // ...
+    }
 
     }
 }
