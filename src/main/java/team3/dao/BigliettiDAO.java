@@ -9,6 +9,7 @@ import team3.entities.Percorrenza;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class BigliettiDAO {
 
@@ -46,7 +47,7 @@ public class BigliettiDAO {
 
             Number count = (Number) em.createQuery(
                                               """
-                                              SELECT COUNT(*)
+                                              SELECT COUNT(b)
                                               FROM biglietti
                                               WHERE data_vidimazione BETWEEN :from AND :to
                                               """
@@ -62,5 +63,18 @@ public class BigliettiDAO {
             if (et.isActive()) et.rollback(); //et.isactive controlla se la connessione e' ancora aperta, se lo e' rollback annulla tutte le transizioni fino a questo punto
             throw new RuntimeException("errore nel conteggio dei biglietti vidimati nel periodo", e);
         }
+    }
+    public long findBigliettiVidimatiPerMezzo(UUID mezzoId) {
+        TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(b) " +
+                        "FROM Biglietto b " +
+                        "WHERE b.mezzo.id = :mezzoId " +
+                        "AND b.dataVidimazione IS NOT NULL",
+                Long.class
+        );
+
+        query.setParameter("mezzoId", mezzoId);
+
+        return query.getSingleResult();
     }
 }

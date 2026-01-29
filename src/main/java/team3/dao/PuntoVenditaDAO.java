@@ -60,4 +60,33 @@ public class PuntoVenditaDAO {
         return query.getResultList();
     }
 
+    //CONTEGGIO BIGLIETTI PER PUNTO DI EMISSIONE
+    public long countBigliettiPerPuntoEmissione(UUID puntoId) {
+
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(b) " +
+                        "FROM Biglietto b " +
+                        "WHERE b.puntoVendita.id = :puntoId",
+                Long.class
+        );
+
+        query.setParameter("puntoId", puntoId);
+
+        return query.getSingleResult();
+    }
+    //CONTEGGIO ABBONAMENTI PER PUNTO DI EMISSIONE
+    public long countAbbonamentiPerPuntoEmissione(UUID puntoId) {
+
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(b) " +
+                        "FROM Abbonamento a " +
+                        "WHERE a.puntoVendita.id = :puntoId",
+                Long.class
+        );
+
+        query.setParameter("puntoId", puntoId);
+
+        return query.getSingleResult();
+    }
+
 }

@@ -6,19 +6,22 @@ import jakarta.persistence.Persistence;
 import team3.dao.*;
 import team3.entities.*;
 import team3.exceptions.NotFoundIdException;
+
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.Scanner;
 import static team3.entities.TipoMezzoDiTrasporto.AUTOBUS;
 import static team3.entities.TipoMezzoDiTrasporto.TRAM;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("trasporto_pubblicopu");
     private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
         EntityManager em = emf.createEntityManager();
@@ -120,10 +123,10 @@ public class Application {
         // ABBONAMENTI
         AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
         Abbonamento abbonamento1 = new Abbonamento("CIAO3", TipoAbbonamento.MENSILE, LocalDate.now(),
-                LocalDate.now().plusMonths(1),tessera, puntoVenditaRecuperato );
+                LocalDate.now().plusMonths(1), tessera, puntoVenditaRecuperato);
 //        abbonamentoDAO.save(abbonamento1);
         Abbonamento abbonamento2 = new Abbonamento("LALALA7", TipoAbbonamento.SETTIMANALE, LocalDate.now(),
-                LocalDate.now().plusWeeks(2),tessera1, puntoVenditaRecuperato2 );
+                LocalDate.now().plusWeeks(2), tessera1, puntoVenditaRecuperato2);
 //        abbonamentoDAO.save(abbonamento2);
 
 
@@ -141,12 +144,12 @@ public class Application {
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
-        try {
-            TipoMezzoDiTrasporto tipo = mezzoDAO.getTipoById(UUID.fromString("690ec275-f589-4b7d-bba8-7efe9bd7737f"));
-            System.out.println("Il tipo del mezzo è: " + tipo);
-        } catch (NotFoundIdException ex) {
-            System.out.println(ex.getMessage());
-        }
+//        try {
+//            TipoMezzoDiTrasporto tipo = mezzoDAO.getTipoById(UUID.fromString("690ec275-f589-4b7d-bba8-7efe9bd7737f"));
+//            System.out.println("Il tipo del mezzo è: " + tipo);
+//        } catch (NotFoundIdException ex) {
+//            System.out.println(ex.getMessage());
+//        }
 
         // PERIODO DI SERVIZIO
 
@@ -195,33 +198,33 @@ public class Application {
 //           periodiDAO.save(p4);
 //           periodiDAO.save(p5);
 
-        try {
-            // Lista dei periodi di servizio dato l'id
-            System.out.println("\nPeriodi di servizio: ");
-            List<PeriodoDiServizio> periodiServizioLista = periodiDAO.getPeriodiDiServizio(mezzo2Item.getIdMezzi());
-            if (periodiServizioLista.isEmpty()) {
-                System.out.println("Non sono registrati periodi di servizio per questo mezzo.");
-            } else {
-                periodiServizioLista.forEach(p ->
-                        System.out.println("Date di inizio servizio: " + p.getDataInizio())
-                );
-            }
+//        try {
+//            // Lista dei periodi di servizio dato l'id
+//            System.out.println("\nPeriodi di servizio: ");
+//            List<PeriodoDiServizio> periodiServizioLista = periodiDAO.getPeriodiDiServizio(mezzo2Item.getIdMezzi());
+//            if (periodiServizioLista.isEmpty()) {
+//                System.out.println("Non sono registrati periodi di servizio per questo mezzo.");
+//            } else {
+//                periodiServizioLista.forEach(p ->
+//                        System.out.println("Date di inizio servizio: " + p.getDataInizio())
+//                );
+//            }
 
             // Lista dei periodi di manutenzione dato l'id
-            System.out.println("\nPeriodi di manutenzione: ");
-            List<PeriodoDiServizio> periodiManutenzioneLista = periodiDAO.getPeriodiDiManutenzione(mezzo2Item.getIdMezzi());
-            if (periodiManutenzioneLista.isEmpty()) {
-                System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
-            } else {
-                periodiManutenzioneLista.forEach(p ->
-                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
-                                "\nDate di inizio manutenzione: " + p.getDataInizio() +
-                                " date di fine: " + p.getDataFine())
-                );
-            }
-        } catch (NotFoundIdException ex) {
-            System.out.println(ex.getMessage());
-        }
+//            System.out.println("\nPeriodi di manutenzione: ");
+//            List<PeriodoDiServizio> periodiManutenzioneLista = periodiDAO.getPeriodiDiManutenzione(mezzo2Item.getIdMezzi());
+//            if (periodiManutenzioneLista.isEmpty()) {
+//                System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
+//            } else {
+//                periodiManutenzioneLista.forEach(p ->
+//                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
+//                                "\nDate di inizio manutenzione: " + p.getDataInizio() +
+//                                " date di fine: " + p.getDataFine())
+//                );
+//            }
+//        } catch (NotFoundIdException ex) {
+//            System.out.println(ex.getMessage());
+//        }
 
         // TRATTE E PERCORRENZE
 
@@ -264,43 +267,49 @@ public class Application {
 //        System.out.println("\nTempo medio effettivo sulla tratta: " + (int) Math.round(media)+ " minuti");
 
 
-        boolean running = true;
+    menuPrincipale();
+
+
+    }
+    private static void menuPrincipale() {
+        EntityManager em = emf.createEntityManager();
+    boolean running = true;
 
         while (running) {
-            System.out.println("AZIENDA DI TRASPORTO PUBBLICO");
-            System.out.println("Sei un utente o un amministratore?");
-            System.out.println("1 - Utente");
-            System.out.println("2 - Amministratore");
-            System.out.println("0 - Esci");
-            System.out.print("Scelta: ");
+        System.out.println("AZIENDA DI TRASPORTO PUBBLICO");
+        System.out.println("Sei un utente o un amministratore?");
+        System.out.println("1 - Utente");
+        System.out.println("2 - Amministratore");
+        System.out.println("0 - Esci");
+        System.out.print("Scelta: ");
 
-            int scelta = scanner.nextInt();
-            scanner.nextLine();
+        int scelta = scanner.nextInt();
+        scanner.nextLine();
 
-            switch (scelta) {
-                case 1: // utente
-                    menuUtente();
-                    break;
-                case 2: // amministratore
-                    menuAmministratore();
-                    break;
-                case 0: // esci
-                    running = false;
-                    System.out.println("Uscita dal sistema, arrivederci e a presto!");
-                    break;
-                default:
-                    System.out.println("Scelta non valida, ritenta.");
-            }
+        switch (scelta) {
+            case 1: // utente
+                menuUtente();
+                break;
+            case 2: // amministratore
+                menuAmministratore();
+                break;
+            case 0: // esci
+                running = false;
+                System.out.println("Uscita dal sistema, arrivederci e a presto!");
+                break;
+            default:
+                System.out.println("Scelta non valida, ritenta.");
         }
+    }
 
         em.close();
         emf.close();
         scanner.close();
     }
+    /////////////////////////////
+    // MENU UTENTE
 
-    // =========================
-    // MENU UTENTE (come schema)
-    // =========================
+    /// /////////////////////////
     private static void menuUtente() {
         boolean back = false;
 
@@ -322,27 +331,25 @@ public class Application {
             scanner.nextLine();
 
             switch (luogo) {
-                case 1:
-                    // sei al distributore automatico
-                    // ora chiedi cosa vuoi fare (biglietto / abbonamento )
-
+                case 1: // distributore automatico
+                    // lo rimando a menuAzioniUtenteDistributore
                     menuAzioniUtenteDistributore();
                     break;
-                case 2:
-                    // sei in rivenditore autorizzato
-                    // ora chiedi cosa vuoi fare (biglietto / abbonamento / verifica validità)
+                case 2: // rivenditore autorizzato
+                    // lo rimando a menuAzioniUtenteRivenditore
                     menuAzioniUtenteRivenditore();
                     break;
                 case 0:
                     back = true;
                     break;
                 default:
-                    System.out.println("Scelta non valida, ritenta!");
+                    System.out.println("Scelta non valida, riprova!");
+                    break;
             }
         }
     }
 
-    // sottomenù: cosa vuoi fare? (come schema utente)
+    // case 1 dello switch precedente -> luogo -> distributore automatico
     public static void menuAzioniUtenteDistributore() {
         EntityManager em = emf.createEntityManager();
         PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
@@ -363,45 +370,45 @@ public class Application {
             System.out.println("Cosa vuoi fare?");
             System.out.println("1 - Fai biglietto");
             System.out.println("2 - Fai abbonamento");
-            System.out.println("3 - Verifica validita abbonamento");
             System.out.println("0 - Torna indietro");
             System.out.print("Scelta: ");
 
             int scelta = Integer.parseInt(scanner.nextLine());
-            scanner.nextLine();
+
 
             switch (scelta) {
                 case 1:
                     // schema: vuoi biglietto? -> genera biglietto dal distributore
                     Biglietto bigliettoDistributore = new Biglietto("CVL20", LocalDate.now(), null,
                             puntoVenditaRecuperato, mezzoRecuperato);
+                    System.out.println("Il tuo biglietto con codice: " + bigliettoDistributore.getCodiceUnivoco() +" è stato generato con successo");
+                    System.out.println("Reindirizzamento al menu principale.");
+                    menuPrincipale();
                     break;
                 case 2:
                     // schema: vuoi abbonamento? -> controllo validità tessera
                     System.out.println("Inserisci il codice della tua tessera.");
                     String numTessera = scanner.nextLine();
                     Tessera tessera1 = tesseraDAO.findByCodiceTessera(numTessera);
-                   boolean valTessera = tesseraDAO.isValid(numTessera);
-                   if (valTessera) {
-                       System.out.println("La tua tessera è valida, ti genero l'abbonamento");
-                       Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT", TipoAbbonamento.MENSILE,
-                               LocalDate.now(), LocalDate.now().plusMonths(1), tessera1, puntoVenditaRecuperato);
-                       System.out.println("\nL'abbonamento con codice: " + abbonamentoDistributore.getCodiceUnivoco() +
-                               " è stato correttamente generato.");
-                   } else {
-                       System.out.println("Purtroppo la tua tessera è scaduta, creazione di una nuova tessera in corso.");
-                       Tessera nuovaTessera = new Tessera("TSSR", LocalDate.now(), LocalDate.now().plusYears(1),
-                              tessera1.getUtente() );
-                       System.out.println("\nLa tua nuova tessera con codice: " + nuovaTessera.getCodiceTessera() +
-                               " è stata correttamente creata.");
-                       // rimandare al case 2
-                   }
-                    break;
-                case 3:
-                    // schema: inserisci numero tessera -> valido/non valido
-                    // se non valido: vuoi rinnovarla? si/no
-                    // se valido: vuoi abbonamento? -> genera abbonamento
-                    // ...
+                    boolean valTessera = tesseraDAO.isValid(numTessera);
+                    if (valTessera) {
+                        System.out.println("La tua tessera è valida, ti genero l'abbonamento");
+                        Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT", TipoAbbonamento.MENSILE,
+                                LocalDate.now(), LocalDate.now().plusMonths(1), tessera1, puntoVenditaRecuperato);
+                        System.out.println("\nL'abbonamento con codice: " + abbonamentoDistributore.getCodiceUnivoco() +
+                                " è stato correttamente generato.");
+                        System.out.println("Reindirizzamento al menu principale.");
+                        menuPrincipale();
+
+                    } else {
+                        System.out.println("Purtroppo la tua tessera è scaduta, creazione di una nuova tessera in corso.");
+                        Tessera nuovaTessera = new Tessera("TSSR", LocalDate.now(), LocalDate.now().plusYears(1),
+                                tessera1.getUtente());
+                        System.out.println("\nLa tua nuova tessera con codice: " + nuovaTessera.getCodiceTessera() +
+                                " è stata correttamente creata.");
+                        System.out.println("Reindirizzamento al menu principale.");
+                        menuPrincipale();
+                    }
                     break;
                 case 0:
                     back = true;
@@ -412,9 +419,79 @@ public class Application {
         }
     }
 
-    // =================================
-    // MENU AMMINISTRATORE (come schema)
-    // =================================
+    // case 2 dello switch precedente -> luogo -> rivenditore autorizzato
+    public static void menuAzioniUtenteRivenditore() {
+        EntityManager em = emf.createEntityManager();
+        PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
+        List<PuntoVendita> puntiVendita = puntoVenditaDAO.findAllPuntiVendita();
+        PuntoVendita puntoVenditaRecuperato = puntiVendita.get(1); // distributore
+        PuntoVendita puntoVenditaRecuperato2 = puntiVendita.get(2); // rivenditore
+        MezziDiTrasportoDAO mezziDiTrasportoDAO = new MezziDiTrasportoDAO(em);
+        List<MezzoDiTrasporto> mezziDiTrasporto = mezziDiTrasportoDAO.findAllMezzi();
+        MezzoDiTrasporto mezzoRecuperato = mezziDiTrasporto.get(1);
+        MezzoDiTrasporto mezzoRecuperato2 = mezziDiTrasporto.get(2);
+        MezzoDiTrasporto mezzoRecuperato3 = mezziDiTrasporto.get(3);
+        TesseraDAO tesseraDAO = new TesseraDAO(em);
+
+
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("Cosa vuoi fare?");
+            System.out.println("1 - Fai biglietto");
+            System.out.println("2 - Fai abbonamento");
+            System.out.println("0 - Torna indietro");
+            System.out.print("Scelta: ");
+
+            int scelta = Integer.parseInt(scanner.nextLine());
+
+
+            switch (scelta) {
+                case 1:
+                    // schema: vuoi biglietto? -> genera biglietto dal distributore
+                    Biglietto bigliettoDistributore = new Biglietto("CVL20", LocalDate.now(), null,
+                            puntoVenditaRecuperato2, mezzoRecuperato2);
+                    System.out.println("Il tuo biglietto con codice: " + bigliettoDistributore.getCodiceUnivoco() +" è stato generato con successo");
+                    System.out.println("Reindirizzamento al menu principale.");
+                    menuPrincipale();
+                    break;
+                case 2:
+                    // schema: vuoi abbonamento? -> controllo validità tessera
+                    System.out.println("Inserisci il codice della tua tessera.");
+                    String numTessera = scanner.nextLine();
+                    Tessera tessera1 = tesseraDAO.findByCodiceTessera(numTessera);
+                    boolean valTessera = tesseraDAO.isValid(numTessera);
+                    if (valTessera) {
+                        System.out.println("La tua tessera è valida, ti genero l'abbonamento");
+                        Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT", TipoAbbonamento.MENSILE,
+                                LocalDate.now(), LocalDate.now().plusMonths(1), tessera1, puntoVenditaRecuperato2);
+                        System.out.println("\nL'abbonamento con codice: " + abbonamentoDistributore.getCodiceUnivoco() +
+                                " è stato correttamente generato.");
+                        System.out.println("Reindirizzamento al menu principale.");
+                        menuPrincipale();
+
+                    } else {
+                        System.out.println("Purtroppo la tua tessera è scaduta, creazione di una nuova tessera in corso.");
+                        Tessera nuovaTessera = new Tessera("TSSR", LocalDate.now(), LocalDate.now().plusYears(1),
+                                tessera1.getUtente());
+                        System.out.println("\nLa tua nuova tessera con codice: " + nuovaTessera.getCodiceTessera() +
+                                " è stata correttamente creata.");
+                        System.out.println("Reindirizzamento al menu principale.");
+                        menuPrincipale();
+                    }
+                    break;
+                case 0:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Scelta non valida, ritenta!");
+            }
+        }
+    }
+
+    ////////////////////////////////////
+    // MENU AMMINISTRATORE
+    ////////////////////////////////////
     private static void menuAmministratore() {
         boolean back = false;
 
@@ -422,119 +499,246 @@ public class Application {
 
             // admin: cosa vuoi visualizzare?
             // biglietti / tessere emesse / mezzi / extra distributori / aggiungere cose
-            // + tua voce già corretta: verifica abbonamento per tessera
 
             System.out.println("ADMIN");
-            System.out.println("Cosa vuoi visualizzare?");
+            System.out.println("Su cosa vuoi maggiori informazioni?");
             System.out.println("1 - Biglietti");
-            System.out.println("2 - Verifica abbonamento per tessera");
-            System.out.println("3 - Tessere emesse");
-            System.out.println("4 - Mezzi");
-            System.out.println("5 - EXTRA: lista distributori attivi/non attivi");
-            System.out.println("6 - Aggiungere cose");
+            System.out.println("2 - Abbonamenti");
+            System.out.println("3 - Mezzi");
+            System.out.println("4 - Aggiungi nuova tratta");
             System.out.println("0 - Torna indietro");
             System.out.print("Scelta: ");
 
             int scelta = scanner.nextInt();
-            scanner.nextLine();
+
 
             switch (scelta) {
-                case 1:
-                    // apre sottomenù biglietti (come schema admin)
-                    // ...
+                case 1: // Biglietti
+
+                    menuBiglietti();
                     break;
-                case 2:
-                    // già collegato alla tua parte (DAO abbonamento)
-                    verificaAbbonamentoAdmin();
+                case 2: // rivenditore autorizzato
+                    // lo rimando a menuAzioniUtenteRivenditore
+                    menuAbbonamenti();
                     break;
                 case 3:
-                    // schema: tessere emesse
-                    // ...
-                    break;
+                    menuMezzi();
                 case 4:
-                    // apre sottomenù mezzi (periodi servizio/manutenzione, percorrenze/tempo medio)
-                    // ...
-                    break;
-                case 5:
-                    // schema extra: lista distributori attivi/non attivi
-                    // ...
-                    break;
-                case 6:
-                    // schema: aggiungere cose (creazioni/aggiunte varie)
-                    // ...
-                    break;
+                    menuTratta();
                 case 0:
                     back = true;
                     break;
                 default:
-                    System.out.println("Scelta non valida, ritenta!");
+                    System.out.println("Scelta non valida, riprova!");
+            }
+
+
+        }
+    }
+    private static void menuBiglietti() {
+        // Biglietti emessi per punto di emissione
+        // Biglietti emessi in un dato periodo di tempo
+        // Biglietti vidimati su un determinato mezzo
+        // Biglietti vidimati in un dato periodo di tempo
+
+        EntityManager em = emf.createEntityManager();
+        PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
+        BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
+        System.out.println("1 - Biglietti emessi per punto di emissione");
+        System.out.println("2 - Biglietti emessi in un dato periodo di tempo");
+        System.out.println("3 - Biglietti vidimati su un determinato mezzo");
+        System.out.println("4 - Biglietti vidimati in un dato periodo di tempo");
+        System.out.println("0 - Esci");
+        int scelta = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean back = false;
+
+        while (!back) {
+            switch (scelta) {
+                case 0:
+                    back = false;
+                    menuPrincipale();
+                    break;
+                case 1:
+                    System.out.println("Inserisci l'ID del punto di emissione di cui vuoi visualizzare il numero di biglietti emessi.");
+
+
+                        UUID idPuntoEmissione = UUID.fromString(scanner.nextLine());
+
+                        long numeroB = puntoVenditaDAO.countBigliettiPerPuntoEmissione(idPuntoEmissione);
+                        System.out.println("Ecco il numero di biglietti emessi per il punto vendita: " + numeroB);
+
+
+                    break;
+
+//                case 2:
+//                    System.out.println("Inserisci il periodo di tempo di cui vuoi visualizzare i biglietti emessi.");
+//                    String dataUtente = scanner.nextLine();
+//
+//                    try {
+//                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dataUtente);
+//                        System.out.println("Formato accettato: " + formatter);
+//
+//                    } catch (IllegalArgumentException e) {
+//                        System.out.println("Formato data non valido. Riprova.");
+//                    }
+//
+//                    break;
+                case 3:
+                    System.out.println("Inserisci l'id del mezzo di cui vuoi vedere il numero di biglietti vidimati.");
+                    UUID idMezzoEmissione = UUID.fromString(scanner.nextLine());
+                    long numeroM = bigliettiDAO.findBigliettiVidimatiPerMezzo(idMezzoEmissione);
+                    System.out.println("Ecco il numero di biglietti emessi per il mezzo di trasporto scelto: " + numeroM);
+                    break;
+                //case 4:
+                default:
+                    System.out.println("Scelta non valida.");
             }
         }
+
     }
 
-    // ======================
-    // METODI UTENTE (bozza)
-    // ======================
+    private static void menuAbbonamenti() {
+        // Abbonamenti emessi per punto di vendita
+        // Abbonamenti emessi in un dato periodo di tempo
 
-    private static void metodoUtente1() {
-        // ...
-    }
+        EntityManager em = emf.createEntityManager();
+        PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
+        AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
 
-    private static void metodoUtente2() {
-        // ...
-    }
+        System.out.println("1 - Biglietti emessi per punto di emissione");
+        System.out.println("2 - Biglietti emessi in un dato periodo di tempo");
+        System.out.println("0 - Esci");
+        int scelta = scanner.nextInt();
+        scanner.nextLine();
 
-    private static void metodoUtente3() {
-        // ...
-    }
+        boolean back = false;
 
-    // ==============================
-    // METODI AMMINISTRATORE (bozza)
-    // ==============================
+        while (!back) {
+            switch (scelta) {
+                case 0:
+                    back = false;
+                    menuPrincipale();
+                    break;
+                case 1:
+                    System.out.println("Inserisci l'ID del punto di vendita di cui vuoi visualizzare il numero di abbonamenti emessi.");
+                    UUID idPuntoEmissione = UUID.fromString(scanner.nextLine());
+                    long numeroA = puntoVenditaDAO.countAbbonamentiPerPuntoEmissione(idPuntoEmissione);
+                    System.out.println("Ecco il numero di biglietti emessi per il punto vendita: " + numeroA);
+                    break;
 
-    private static void metodoAdmin1() {
-        // ...
-    }
+//                case 2:
+//                    System.out.println("Inserisci il periodo di tempo di cui vuoi visualizzare i biglietti emessi.");
+//                    String dataUtente = scanner.nextLine();
+//
+//                    try {
+//                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dataUtente);
+//                        System.out.println("Formato accettato: " + formatter);
+//
+//                    } catch (IllegalArgumentException e) {
+//                        System.out.println("Formato data non valido. Riprova.");
+//                    }
+//
+//                    break;
 
-    // ============================
-    // SOLO PER LA TUA PARTE (DAO)
-    // ============================
-    private static void verificaAbbonamentoAdmin() {
-
-        // admin: verifica rapida abbonamento per codice tessera (come consegna)
-        // chiede codice tessera
-        // controlla se valido in base alla data odierna
-        // stampa valido / non valido
-
-        System.out.println("Inserisci codice tessera:");
-        String codiceTessera = scanner.nextLine();
-
-        LocalDate oggi = LocalDate.now();
-
-        boolean valido = abbonamentoDAO.isAbbonamentoValido(codiceTessera, oggi);
-
-        if (valido) {
-            System.out.println("Abbonamento VALIDO");
-        } else {
-            System.out.println("Abbonamento NON valido o assente");
+                default:
+                    System.out.println("Scelta non valida.");
+            }
         }
-    }
-
-    private static void metodoAdmin3() {
-        // ...
-    }
-
-    private static void metodoAdmin4() {
-        // ...
-    }
-
-    private static void metodoAdmin5() {
-        // ...
-    }
-
-    private static void metodoAdmin6() {
-        // ...
-    }
 
     }
+
+    private static void menuMezzi() {
+        // Periodi di servizio di un mezzo
+        // Periodi di manutenzione di un mezzo
+        // Numero di volte che un mezzo ha percorso una determinata tratta + tempo medio effettivo
+
+        EntityManager em = emf.createEntityManager();
+        MezziDiTrasportoDAO mezziDiTrasportoDAO = new MezziDiTrasportoDAO(em);
+        PercorrenzaDAO percorrenzaDAO = new PercorrenzaDAO(em);
+        PeriodiDiServizioDAO periodiDiServizioDAO = new PeriodiDiServizioDAO(em);
+        TrattaDAO trattaDAO = new TrattaDAO(em);
+
+        System.out.println("1 - Periodi di servizio di un mezzo");
+        System.out.println("2 - Periodi di manutenzione di un mezzo");
+        System.out.println("3 - Numero di volte che un mezzo ha percorso una determinata tratta + tempo medio effettivo");
+        System.out.println("0 - Esci");
+        int scelta = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean back = false;
+
+        while (!back) {
+            switch (scelta) {
+                case 0:
+                    back = false;
+                    menuPrincipale();
+                    break;
+                case 1:
+                    System.out.println("Inserisci l'ID del mezzo di cui vuoi visualizzare i periodi di servizio.");
+                    UUID idPeriodoMezzo = UUID.fromString(scanner.nextLine());
+                    List<PeriodoDiServizio> periodo = periodiDiServizioDAO.getPeriodiDiServizio(idPeriodoMezzo);
+                    System.out.println("Ecco i periodi di servizio del mezzo scelto: " + periodo);
+                    break;
+                case 2:
+                    System.out.println("Inserisci l'ID del mezzo di cui vuoi visualizzare i periodi di manutenzione.");
+                    UUID idPeriodoManutenzione = UUID.fromString(scanner.nextLine());
+                    List<PeriodoDiServizio> periodo2 = periodiDiServizioDAO.getPeriodiDiManutenzione(idPeriodoManutenzione);
+                    System.out.println("Ecco i periodi di manutenzione del mezzo scelto: " + periodo2);
+                    break;
+                case 3:
+                    System.out.println("Inserisci l'ID del mezzo e della tratta.");
+                    UUID idMezzo = UUID.fromString(scanner.nextLine());
+                    MezzoDiTrasporto mezzomezzo = mezziDiTrasportoDAO.findById(idMezzo);
+                    System.out.println("Inserisci l'ID della tratta.");
+                    UUID idTratta = UUID.fromString(scanner.nextLine());
+                    double trattaMezzo = percorrenzaDAO.getTempoMedioEffettivo(mezzomezzo, idTratta);
+                    System.out.println(trattaMezzo);
+
+                default:
+                    System.out.println("Scelta non valida.");
+            }
+        }
+
+    }
+
+    private static void menuTratta() {
+        // Creare una nuova tratta
+
+        EntityManager em = emf.createEntityManager();
+        TrattaDAO trattaDAO = new TrattaDAO(em);
+        System.out.println("1 - Crea una nuova tratta");
+        System.out.println("0 - Esci");
+        int scelta = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean back = false;
+
+        while (!back) {
+            switch (scelta) {
+                case 0:
+                    back = false;
+                    menuPrincipale();
+                    break;
+                case 1:
+                    System.out.println("Inserisci la zona di partenza");
+                    String partenza = scanner.nextLine();
+                    System.out.println("Inserisci la zona di arrivo");
+                    String arrivo = scanner.nextLine();
+                    System.out.println("Inserisci il tempo previsto per la tratta (in minuti).");
+                    int tempo = Integer.parseInt(scanner.nextLine());
+
+                    Tratta trattaNuova = new Tratta(partenza, arrivo, tempo);
+                    System.out.println("La seguente tratta è stata creata: " + trattaNuova);
+                    break;
+
+                default:
+                    System.out.println("Scelta non valida.");
+            }
+        }
+
+    }
+
 }
+
