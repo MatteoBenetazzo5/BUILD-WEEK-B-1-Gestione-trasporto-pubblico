@@ -118,11 +118,11 @@ public class Application {
 //        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
         //bigliettiDAO.save(biglietto1);
         Biglietto biglietto2 = new Biglietto("456DEF", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato, mezzoRecuperato);
-        bigliettiDAO.save(biglietto2);
+//        bigliettiDAO.save(biglietto2);
         Biglietto biglietto3 = new Biglietto("789GHL", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato2, mezzoRecuperato2);
-        bigliettiDAO.save(biglietto3);
+//        bigliettiDAO.save(biglietto3);
         Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato3, mezzoRecuperato3);
-        bigliettiDAO.save(biglietto4);
+//        bigliettiDAO.save(biglietto4);
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
