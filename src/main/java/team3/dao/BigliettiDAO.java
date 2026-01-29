@@ -9,6 +9,7 @@ import team3.entities.Percorrenza;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class BigliettiDAO {
 
@@ -18,11 +19,21 @@ public class BigliettiDAO {
         this.em = em;
     }
 
-   // public List<Biglietto> findBigliettiVidimatiPerMezzo(
-         //   UUID mezzoId,
-        //    LocalDate dataEmissione
-  //  )
-   public void save(Biglietto b) {
+    public long findBigliettiVidimatiPerMezzo(UUID mezzoId) {
+        TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(b) " +
+                        "FROM Biglietto b " +
+                        "WHERE b.mezzo.id = :mezzoId " +
+                        "AND b.dataVidimazione IS NOT NULL",
+                Long.class
+        );
+
+        query.setParameter("mezzoId", mezzoId);
+
+        return query.getSingleResult();
+    }
+
+    public void save(Biglietto b) {
 
        EntityTransaction transaction = em.getTransaction();
        transaction.begin();

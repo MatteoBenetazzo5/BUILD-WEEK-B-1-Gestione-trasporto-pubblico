@@ -38,6 +38,22 @@ public class PuntoVenditaDAO {
         return p;
     }
 
+    //CONTEGGIO BIGLIETTI PER PUNTO DI EMISSIONE
+    public long countBigliettiPerPuntoEmissione(UUID puntoId) {
+
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(b) " +
+                        "FROM Biglietto b " +
+                        "WHERE b.puntoEmissione.id = :puntoId",
+                Long.class
+        );
+
+        query.setParameter("puntoId", puntoId);
+
+        return query.getSingleResult();
+    }
+
+
 
     // -------- DELETE --------
     public boolean deleteById(UUID puntoVenditaId) {

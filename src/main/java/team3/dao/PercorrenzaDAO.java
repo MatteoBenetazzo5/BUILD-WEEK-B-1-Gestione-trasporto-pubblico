@@ -117,6 +117,24 @@ public class PercorrenzaDAO {
         return res == null ? 0.0 : res;
     }
 
+    //NUMERO DI VOLTE IN CUI UN MEZZO PERCORRE UNA TRATTA
+    public long countPercorrenzePerMezzoETratta(UUID mezzoId, UUID trattaId) {
+
+        TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(p) " +
+                        "FROM Percorrenza p " +
+                        "WHERE p.mezzo.id = :mezzoId " +
+                        "AND p.tratta.id = :trattaId",
+                Long.class
+        );
+
+        query.setParameter("mezzoId", mezzoId);
+        query.setParameter("trattaId", trattaId);
+
+        return query.getSingleResult();
+    }
+
+
     // 9) DELETE
     public void findByIdAndDelete(UUID percorrenzaId) {
         EntityTransaction transaction = em.getTransaction();
