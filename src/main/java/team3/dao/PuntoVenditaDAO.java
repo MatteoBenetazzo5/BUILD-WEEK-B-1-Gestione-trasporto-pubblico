@@ -6,6 +6,7 @@ import jakarta.persistence.TypedQuery;
 import team3.entities.MezzoDiTrasporto;
 import team3.entities.PuntoVendita;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,7 +54,20 @@ public class PuntoVenditaDAO {
         return query.getSingleResult();
     }
 
+    //CONTEGGIO ABBONAMENTI PER PUNTO DI EMISSIONE
+    public long countAbbonamentiPerPuntoEmissione(UUID puntoId) {
 
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(b) " +
+                        "FROM Abbonamento a " +
+                        "WHERE b.puntoEmissione.id = :puntoId",
+                Long.class
+        );
+
+        query.setParameter("puntoId", puntoId);
+
+        return query.getSingleResult();
+    }
 
     // -------- DELETE --------
     public boolean deleteById(UUID puntoVenditaId) {
