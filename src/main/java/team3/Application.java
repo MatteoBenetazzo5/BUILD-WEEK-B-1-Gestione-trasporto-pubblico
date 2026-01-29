@@ -111,6 +111,20 @@ public class Application {
         MezzoDiTrasporto mezzoRecuperato2 = mezziDiTrasporto.get(2);
         MezzoDiTrasporto mezzoRecuperato3 = mezziDiTrasporto.get(3);
 
+        // TESSERE PER ABBONAMENTI
+        List<Tessera> tesseraList = tesseraDAO.findAllTessere();
+        Tessera tessera = tesseraList.get(0);
+        Tessera tessera1 = tesseraList.get(1);
+
+        // ABBONAMENTI
+        AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
+        Abbonamento abbonamento1 = new Abbonamento("CIAO3", TipoAbbonamento.MENSILE, LocalDate.now(),
+                LocalDate.now().plusMonths(1),tessera, puntoVenditaRecuperato );
+        abbonamentoDAO.save(abbonamento1);
+        Abbonamento abbonamento2 = new Abbonamento("LALALA7", TipoAbbonamento.SETTIMANALE, LocalDate.now(),
+                LocalDate.now().plusWeeks(2),tessera1, puntoVenditaRecuperato2 );
+        abbonamentoDAO.save(abbonamento2);
+
 
         //BIGLIETTO
         BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
