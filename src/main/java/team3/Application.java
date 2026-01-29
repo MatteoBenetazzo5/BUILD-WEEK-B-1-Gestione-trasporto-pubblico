@@ -111,6 +111,20 @@ public class Application {
         MezzoDiTrasporto mezzoRecuperato2 = mezziDiTrasporto.get(2);
         MezzoDiTrasporto mezzoRecuperato3 = mezziDiTrasporto.get(3);
 
+        // TESSERE PER ABBONAMENTI
+        List<Tessera> tesseraList = tesseraDAO.findAllTessere();
+        Tessera tessera = tesseraList.get(0);
+        Tessera tessera1 = tesseraList.get(1);
+
+        // ABBONAMENTI
+        AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
+        Abbonamento abbonamento1 = new Abbonamento("CIAO3", TipoAbbonamento.MENSILE, LocalDate.now(),
+                LocalDate.now().plusMonths(1),tessera, puntoVenditaRecuperato );
+        abbonamentoDAO.save(abbonamento1);
+        Abbonamento abbonamento2 = new Abbonamento("LALALA7", TipoAbbonamento.SETTIMANALE, LocalDate.now(),
+                LocalDate.now().plusWeeks(2),tessera1, puntoVenditaRecuperato2 );
+        abbonamentoDAO.save(abbonamento2);
+
 
         //BIGLIETTO
         BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
@@ -118,11 +132,11 @@ public class Application {
 //        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
         //bigliettiDAO.save(biglietto1);
         Biglietto biglietto2 = new Biglietto("456DEF", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato, mezzoRecuperato);
-        bigliettiDAO.save(biglietto2);
+//        bigliettiDAO.save(biglietto2);
         Biglietto biglietto3 = new Biglietto("789GHL", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato2, mezzoRecuperato2);
-        bigliettiDAO.save(biglietto3);
+//        bigliettiDAO.save(biglietto3);
         Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato3, mezzoRecuperato3);
-        bigliettiDAO.save(biglietto4);
+//        bigliettiDAO.save(biglietto4);
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
