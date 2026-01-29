@@ -7,8 +7,8 @@ import team3.dao.*;
 import team3.entities.*;
 import team3.exceptions.NotFoundIdException;
 
-import java.awt.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,10 +32,10 @@ public class Application {
         Utente u3 = new Utente("Dario", "Verdi");
         Utente u4 = new Utente("Anna", "Viola");
 
-     //   utenteDAO.saveUtente(u1);
-      //  utenteDAO.saveUtente(u2);
-       //  utenteDAO.saveUtente(u3);
-       //  utenteDAO.saveUtente(u4);
+        //   utenteDAO.saveUtente(u1);
+        //  utenteDAO.saveUtente(u2);
+        //  utenteDAO.saveUtente(u3);
+        //  utenteDAO.saveUtente(u4);
 
 
         // ---------- CREO 2 TESSERE ----------
@@ -52,10 +52,8 @@ public class Application {
         t2.setDataScadenza(LocalDate.now().plusYears(1));
         t2.setUtente(u2);
 
-      // tesseraDAO.saveTessera(t1);
-      //  tesseraDAO.saveTessera(t2);
-
-
+        // tesseraDAO.saveTessera(t1);
+        //  tesseraDAO.saveTessera(t2);
 
 
         // MEZZI DI TRASPORTO
@@ -83,7 +81,7 @@ public class Application {
                 AUTOBUS,
                 120
         );
-      //  mezzoDAO.save(mezzo);
+        //  mezzoDAO.save(mezzo);
 //          mezzoDAO.save(mezzo2);
 //          mezzoDAO.save(mezzo3);
 //          mezzoDAO.save(mezzo4);
@@ -93,28 +91,38 @@ public class Application {
         PuntoVenditaDAO puntoVenditaDAO = new PuntoVenditaDAO(em);
 
         //PuntoVendita puntoVendita1 = new PuntoVendita(StatoPuntoVendita.ATTIVO,TipoPuntoVendita.DISTRIBUTORE);
-        PuntoVendita puntoVendita2 = new PuntoVendita(StatoPuntoVendita.FUORI_SERVIZIO,TipoPuntoVendita.DISTRIBUTORE);
+        PuntoVendita puntoVendita2 = new PuntoVendita(StatoPuntoVendita.FUORI_SERVIZIO, TipoPuntoVendita.DISTRIBUTORE);
         PuntoVendita puntoVendita3 = new PuntoVendita(null, TipoPuntoVendita.RIVENDITORE);
-        PuntoVendita puntoVendita4 = new PuntoVendita(null,TipoPuntoVendita.RIVENDITORE);
+        PuntoVendita puntoVendita4 = new PuntoVendita(null, TipoPuntoVendita.RIVENDITORE);
 
         // puntoVenditaDAO.save(puntoVendita1);
-       // puntoVenditaDAO.save(puntoVendita2);
-       // puntoVenditaDAO.save(puntoVendita3);
-       // puntoVenditaDAO.save(puntoVendita4);
+        // puntoVenditaDAO.save(puntoVendita2);
+        // puntoVenditaDAO.save(puntoVendita3);
+        // puntoVenditaDAO.save(puntoVendita4);
 
-       List <PuntoVendita> puntiVendita = puntoVenditaDAO.findAllPuntiVendita();
-       PuntoVendita puntoVenditaRecuperato = puntiVendita.getFirst();
+        List<PuntoVendita> puntiVendita = puntoVenditaDAO.findAllPuntiVendita();
+        PuntoVendita puntoVenditaRecuperato = puntiVendita.get(1);
+        PuntoVendita puntoVenditaRecuperato2 = puntiVendita.get(2);
+        PuntoVendita puntoVenditaRecuperato3 = puntiVendita.get(3);
 
 
-       List <MezzoDiTrasporto> mezziDiTrasporto = mezzoDAO.findAllMezzi();
-       MezzoDiTrasporto mezzoRecuperato = mezziDiTrasporto.getFirst();
+        List<MezzoDiTrasporto> mezziDiTrasporto = mezzoDAO.findAllMezzi();
+        MezzoDiTrasporto mezzoRecuperato = mezziDiTrasporto.get(1);
+        MezzoDiTrasporto mezzoRecuperato2 = mezziDiTrasporto.get(2);
+        MezzoDiTrasporto mezzoRecuperato3 = mezziDiTrasporto.get(3);
 
 
         //BIGLIETTO
         BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
 
-        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
-            //bigliettiDAO.save(biglietto1);
+//        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
+        //bigliettiDAO.save(biglietto1);
+        Biglietto biglietto2 = new Biglietto("456DEF", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato, mezzoRecuperato);
+        bigliettiDAO.save(biglietto2);
+        Biglietto biglietto3 = new Biglietto("789GHL", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato2, mezzoRecuperato2);
+        bigliettiDAO.save(biglietto3);
+        Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato3, mezzoRecuperato3);
+        bigliettiDAO.save(biglietto4);
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
@@ -166,7 +174,7 @@ public class Application {
                 "Guasto al motore"
         );
 
-     //   periodiDAO.save(p1);
+        //   periodiDAO.save(p1);
 //           periodiDAO.save(p2);
 //           periodiDAO.save(p3);
 //           periodiDAO.save(p4);
@@ -189,7 +197,7 @@ public class Application {
             List<PeriodoDiServizio> periodiManutenzioneLista = periodiDAO.getPeriodiDiManutenzione(mezzo2Item.getIdMezzi());
             if (periodiManutenzioneLista.isEmpty()) {
                 System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
-        } else {
+            } else {
                 periodiManutenzioneLista.forEach(p ->
                         System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
                                 "\nDate di inizio manutenzione: " + p.getDataInizio() +
@@ -241,5 +249,5 @@ public class Application {
 //        System.out.println("\nTempo medio effettivo sulla tratta: " + (int) Math.round(media)+ " minuti");
 
 
-
-    }}
+    }
+}
