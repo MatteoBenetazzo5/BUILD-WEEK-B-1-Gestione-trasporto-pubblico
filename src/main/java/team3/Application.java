@@ -141,6 +141,15 @@ public class Application {
         Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDate.now().plusMonths(1), puntoVenditaRecuperato3, mezzoRecuperato3);
        // bigliettiDAO.save(biglietto4);
 
+        Biglietto biglietto5 = new Biglietto("123ACC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
+         bigliettiDAO.save(biglietto5);
+        Biglietto biglietto6 = new Biglietto("456DDEF", LocalDate.now(), LocalDate.now().minusMonths(3), puntoVenditaRecuperato, mezzoRecuperato);
+         bigliettiDAO.save(biglietto6);
+        Biglietto biglietto7 = new Biglietto("789GHHL", LocalDate.now(), LocalDate.now().minusMonths(2), puntoVenditaRecuperato2, mezzoRecuperato2);
+         bigliettiDAO.save(biglietto7);
+        Biglietto biglietto8 = new Biglietto("184THHS", LocalDate.now(), LocalDate.now().minusMonths(1), puntoVenditaRecuperato3, mezzoRecuperato3);
+         bigliettiDAO.save(biglietto8);
+
 
 
 
