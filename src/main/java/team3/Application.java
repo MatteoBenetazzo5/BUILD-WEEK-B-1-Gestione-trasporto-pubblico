@@ -572,7 +572,7 @@ public class Application {
             boolean back = false;
 
             while (!back) {
-                System.out.println("1 - Biglietti emessi per punto di emissione");
+                System.out.println("1 - Biglietti emessi per punto vendita");
                 System.out.println("2 - Biglietti emessi in un dato periodo di tempo");
                 System.out.println("3 - Biglietti vidimati su un determinato mezzo");
                 System.out.println("4 - Biglietti vidimati in un dato periodo di tempo");
@@ -593,7 +593,7 @@ public class Application {
                         break;
 
                     case 1:
-                        System.out.println("Inserisci l'ID del punto di emissione di cui vuoi visualizzare il numero di biglietti emessi.");
+                        System.out.println("Inserisci l'ID del punto vendita di cui vuoi visualizzare il numero di biglietti emessi.");
                         try {
                             UUID idPuntoEmissione = UUID.fromString(scanner.nextLine());
                             long numeroB = puntoVenditaDAO.countBigliettiPerPuntoEmissione(idPuntoEmissione);
@@ -628,7 +628,7 @@ public class Application {
                         System.out.println("Inserisci la data di fine: ");
                         LocalDate fineV = LocalDate.parse(scanner.nextLine());
                         long bigliettiV = bigliettiDAO.countBigliettiVidimatiPeriodo(inizioV, fineV);
-                        System.out.println("Il numero di biglietti emessi nel periodo è: " + bigliettiV);
+                        System.out.println("Il numero di biglietti vidimati in questo periodo periodo è: " + bigliettiV);
                         return;
                     default:
                         System.out.println("Scelta non valida.");
