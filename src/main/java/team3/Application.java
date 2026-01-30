@@ -414,7 +414,7 @@ public class Application {
                             return;
 
                         } else {
-                            System.out.println("La tessera che hai inserito non è scaduta oppure non esiste.");
+                            System.out.println("La tessera che hai inserito è scaduta oppure non esiste.");
                             System.out.println("Reindirizzamento al menu principale.");
                             return;
                         }
