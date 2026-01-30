@@ -2,14 +2,12 @@ package team3;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import team3.dao.*;
 import team3.entities.*;
 import team3.exceptions.NotFoundIdException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
@@ -132,25 +130,23 @@ public class Application {
         //BIGLIETTO
         BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
 
-      Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
-       // bigliettiDAO.save(biglietto1);
+        Biglietto biglietto1 = new Biglietto("123ABC", LocalDate.now(), null, puntoVenditaRecuperato, mezzoRecuperato);
+        // bigliettiDAO.save(biglietto1);
         Biglietto biglietto2 = new Biglietto("456DEF", LocalDate.now(), LocalDate.now().plusMonths(3), puntoVenditaRecuperato, mezzoRecuperato);
-       // bigliettiDAO.save(biglietto2);
+        // bigliettiDAO.save(biglietto2);
         Biglietto biglietto3 = new Biglietto("789GHL", LocalDate.now(), LocalDate.now().plusMonths(2), puntoVenditaRecuperato2, mezzoRecuperato2);
-       // bigliettiDAO.save(biglietto3);
+        // bigliettiDAO.save(biglietto3);
         Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDate.now().plusMonths(1), puntoVenditaRecuperato3, mezzoRecuperato3);
-       // bigliettiDAO.save(biglietto4);
+        // bigliettiDAO.save(biglietto4);
 
-        Biglietto biglietto5 = new Biglietto("123ACC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
-         bigliettiDAO.save(biglietto5);
+        Biglietto biglietto5 = new Biglietto("123ACC", LocalDate.now(), null, puntoVenditaRecuperato, mezzoRecuperato);
+//         bigliettiDAO.save(biglietto5);
         Biglietto biglietto6 = new Biglietto("456DDEF", LocalDate.now(), LocalDate.now().minusMonths(3), puntoVenditaRecuperato, mezzoRecuperato);
-         bigliettiDAO.save(biglietto6);
+//         bigliettiDAO.save(biglietto6);
         Biglietto biglietto7 = new Biglietto("789GHHL", LocalDate.now(), LocalDate.now().minusMonths(2), puntoVenditaRecuperato2, mezzoRecuperato2);
-         bigliettiDAO.save(biglietto7);
+//         bigliettiDAO.save(biglietto7);
         Biglietto biglietto8 = new Biglietto("184THHS", LocalDate.now(), LocalDate.now().minusMonths(1), puntoVenditaRecuperato3, mezzoRecuperato3);
-         bigliettiDAO.save(biglietto8);
-
-
+//         bigliettiDAO.save(biglietto8);
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
@@ -328,6 +324,7 @@ public class Application {
 
     /////////////////////////////
     // MENU UTENTE
+
     /// /////////////////////////
     private static void menuUtente() {
         boolean back = false;
@@ -520,7 +517,8 @@ public class Application {
 
     ////////////////////////////////////
     // MENU AMMINISTRATORE
-    ////////////////////////////////////
+
+    /// /////////////////////////////////
     private static void menuAmministratore() {
         boolean back = false;
 
@@ -733,14 +731,14 @@ public class Application {
                         try {
                             UUID idPeriodoMezzo = UUID.fromString(scanner.nextLine());
                             List<PeriodoDiServizio> periodiServizioLista = periodiDiServizioDAO.getPeriodiDiServizio(idPeriodoMezzo);
-                          if (periodiServizioLista.isEmpty()) {
-                              System.out.println("Non sono registrati periodi di servizio per questo mezzo.");
-                           } else {
-                               periodiServizioLista.forEach(p ->
-                               System.out.println("Date di inizio servizio: " + p.getDataInizio()));
+                            if (periodiServizioLista.isEmpty()) {
+                                System.out.println("Non sono registrati periodi di servizio per questo mezzo.");
+                            } else {
+                                periodiServizioLista.forEach(p ->
+                                        System.out.println("Date di inizio servizio: " + p.getDataInizio()));
 
 
-                                   }
+                            }
                         } catch (NotFoundIdException ex) {
                             System.out.println(ex.getMessage());
                         }
@@ -750,26 +748,26 @@ public class Application {
                         System.out.println("Inserisci l'ID del mezzo di cui vuoi visualizzare i periodi di manutenzione.");
                         try {
                             UUID idPeriodoManutenzione = UUID.fromString(scanner.nextLine());
-                             System.out.println("\nPeriodi di manutenzione: ");
-          List<PeriodoDiServizio> periodiManutenzioneLista = periodiDiServizioDAO.getPeriodiDiManutenzione(idPeriodoManutenzione);
-            if (periodiManutenzioneLista.isEmpty()) {
-               System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
-            } else {
-                periodiManutenzioneLista.forEach(p ->
-                {
-                    if (p.getDataFine() == null) {
-                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
-                                "Date di inizio manutenzione: " + p.getDataInizio());
-                    } else
+                            System.out.println("\nPeriodi di manutenzione: ");
+                            List<PeriodoDiServizio> periodiManutenzioneLista = periodiDiServizioDAO.getPeriodiDiManutenzione(idPeriodoManutenzione);
+                            if (periodiManutenzioneLista.isEmpty()) {
+                                System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
+                            } else {
+                                periodiManutenzioneLista.forEach(p ->
+                                {
+                                    if (p.getDataFine() == null) {
+                                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
+                                                "Date di inizio manutenzione: " + p.getDataInizio());
+                                    } else
 
-                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
-                                "\nDate di inizio manutenzione: " + p.getDataInizio() +
-                                " date di fine: " + p.getDataFine());
-                });
-            }
-        } catch (NotFoundIdException ex) {
-            System.out.println(ex.getMessage());
-        }
+                                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
+                                                "\nDate di inizio manutenzione: " + p.getDataInizio() +
+                                                " date di fine: " + p.getDataFine());
+                                });
+                            }
+                        } catch (NotFoundIdException ex) {
+                            System.out.println(ex.getMessage());
+                        }
                         break;
 
                     case 3:
