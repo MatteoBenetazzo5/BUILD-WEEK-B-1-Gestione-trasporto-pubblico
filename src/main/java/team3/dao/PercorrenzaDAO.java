@@ -115,7 +115,26 @@ public class PercorrenzaDAO {
 
         Double res = query.getSingleResult();
         return res == null ? 0.0 : res;
+
     }
+    // Conto il numero delle volte che un mezzo ha percorso una tratta
+    public long countPercorrenze(MezzoDiTrasporto mezzo, UUID trattaId) {
+        Tratta tratta = findTrattaById(trattaId);
+
+        TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(p) " +
+                        "FROM Percorrenza p " +
+                        "WHERE p.mezzo = :mezzo AND p.tratta = :tratta",
+                Long.class
+        );
+
+        query.setParameter("mezzo", mezzo);
+        query.setParameter("tratta", tratta);
+
+        Long result = query.getSingleResult();
+        return result == null ? 0L : result;
+    }
+
 
     // 9) DELETE
     public void findByIdAndDelete(UUID percorrenzaId) {
