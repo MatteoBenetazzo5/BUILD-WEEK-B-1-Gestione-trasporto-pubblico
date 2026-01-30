@@ -7,6 +7,7 @@ import jakarta.persistence.TypedQuery;
 import team3.entities.Biglietto;
 import team3.entities.Percorrenza;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -38,9 +39,8 @@ public class BigliettiDAO {
     }
 
     public long countBigliettiVidimatiPeriodo(
-            LocalDateTime from,
-            LocalDateTime to
-    ) {
+            LocalDate from,
+            LocalDate to) {
         EntityTransaction et = em.getTransaction();
         try {
             et.begin();
@@ -60,14 +60,14 @@ public class BigliettiDAO {
             return count.longValue();
 
         } catch (PersistenceException e) { // query fallita o connessione rotta entriamo nel catch (persistenceexception)
-            if (et.isActive()) et.rollback(); //et.isactive controlla se la connessione e' ancora aperta, se lo e' rollback annulla tutte le transizioni fino a questo punto
+            if (et.isActive()) et.rollback(); //et.isactive controlla se la connessione è ancora aperta, se lo è rollback annulla tutte le transizioni fino a questo punto
             throw new RuntimeException("errore nel conteggio dei biglietti vidimati nel periodo", e);
         }
     }
     public long findBigliettiVidimatiPerMezzo(UUID mezzoId) {
         TypedQuery<Long> query = em.createQuery(
                 "SELECT COUNT(b) " +
-                        "FROM Biglietto b " +
+                        "FROM Biglietti b " +
                         "WHERE b.mezzo.id = :mezzoId " +
                         "AND b.dataVidimazione IS NOT NULL",
                 Long.class
@@ -75,6 +75,19 @@ public class BigliettiDAO {
 
         query.setParameter("mezzoId", mezzoId);
 
+        return query.getSingleResult();
+    }
+
+    public long findBigliettiEmessiPeriodo (LocalDate inizio, LocalDate fine){
+        TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(b)" +
+                        "FROM Biglietti " +
+                        "WHERE b.dataEmissione " +
+                        "BETWEEN :inizio AND :fine",
+                       Long.class
+        );
+        query.setParameter("inizio", inizio);
+        query.setParameter("fine", fine);
         return query.getSingleResult();
     }
 }
