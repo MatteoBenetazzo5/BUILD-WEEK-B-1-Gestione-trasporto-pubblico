@@ -2,6 +2,7 @@ package team3;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import team3.dao.*;
 import team3.entities.*;
@@ -139,6 +140,18 @@ public class Application {
 //        bigliettiDAO.save(biglietto3);
         Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato3, mezzoRecuperato3);
 //        bigliettiDAO.save(biglietto4);
+
+        List<Biglietto> lista = bigliettiDAO.findAllBiglietti();
+
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        for (Biglietto b : lista) {
+            Biglietto managed = em.contains(b) ? b : em.merge(b);
+            em.remove(managed);
+        }
+
+        tx.commit();
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
