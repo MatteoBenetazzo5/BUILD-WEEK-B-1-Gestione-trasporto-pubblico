@@ -2,11 +2,9 @@ package team3;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import team3.dao.*;
 import team3.entities.*;
-import team3.exceptions.NotFoundIdException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -140,18 +138,6 @@ public class Application {
 //        bigliettiDAO.save(biglietto3);
         Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato3, mezzoRecuperato3);
 //        bigliettiDAO.save(biglietto4);
-
-        List<Biglietto> lista = bigliettiDAO.findAllBiglietti();
-
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        for (Biglietto b : lista) {
-            Biglietto managed = em.contains(b) ? b : em.merge(b);
-            em.remove(managed);
-        }
-
-        tx.commit();
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
@@ -329,6 +315,7 @@ public class Application {
 
     /////////////////////////////
     // MENU UTENTE
+
     /// /////////////////////////
     private static void menuUtente() {
         boolean back = false;
@@ -527,7 +514,8 @@ public class Application {
 
     ////////////////////////////////////
     // MENU AMMINISTRATORE
-    ////////////////////////////////////
+
+    /// /////////////////////////////////
     private static void menuAmministratore() {
         boolean back = false;
 
