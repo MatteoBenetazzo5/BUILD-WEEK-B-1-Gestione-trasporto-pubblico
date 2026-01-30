@@ -406,7 +406,7 @@ public class Application {
 
                         if (valTessera) {
                             System.out.println("La tua tessera è valida, ti genero l'abbonamento");
-                            Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT", TipoAbbonamento.MENSILE,
+                            Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT03", TipoAbbonamento.MENSILE,
                                     LocalDate.now(), LocalDate.now().plusMonths(1), tessera1, puntoVenditaRecuperato);
                             System.out.println("\nL'abbonamento con codice: " + abbonamentoDistributore.getCodiceUnivoco() +
                                     " è stato correttamente generato.");
@@ -474,8 +474,6 @@ public class Application {
                     case 1:
                         Biglietto bigliettoDistributore = new Biglietto("CVL20", LocalDate.now(), null,
                                 puntoVenditaRecuperato2, mezzoRecuperato2);
-                        bigliettiDAO.save(bigliettoDistributore);
-
                         System.out.println("Il tuo biglietto con codice: " + bigliettoDistributore.getCodiceUnivoco() + " è stato generato con successo");
                         System.out.println("Reindirizzamento al menu principale.");
                         return;
@@ -489,22 +487,15 @@ public class Application {
 
                         if (valTessera) {
                             System.out.println("La tua tessera è valida, ti genero l'abbonamento");
-                            Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT", TipoAbbonamento.MENSILE,
+                            Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT01", TipoAbbonamento.MENSILE,
                                     LocalDate.now(), LocalDate.now().plusMonths(1), tessera1, puntoVenditaRecuperato2);
-                            abbonamentoDAO.save(abbonamentoDistributore);
                             System.out.println("\nL'abbonamento con codice: " + abbonamentoDistributore.getCodiceUnivoco() +
                                     " L'abbonamento è stato correttamente generato.");
                             System.out.println("Reindirizzamento al menu principale.");
                             return;
 
                         } else {
-                            System.out.println("Purtroppo la tua tessera è scaduta, creazione di una nuova tessera in corso.");
-                            Tessera nuovaTessera = new Tessera("TSSR", LocalDate.now(), LocalDate.now().plusYears(1),
-                                    tessera1.getUtente());
-                            tesseraDAO.saveTessera(nuovaTessera);
-
-                            System.out.println("\nLa tua nuova tessera con codice: " + nuovaTessera.getCodiceTessera() +
-                                    " La tessera è stata correttamente creata.");
+                            System.out.println("Purtroppo la tua tessera è scaduta oppure non esiste.");
                             System.out.println("Reindirizzamento al menu principale.");
                             return;
                         }
