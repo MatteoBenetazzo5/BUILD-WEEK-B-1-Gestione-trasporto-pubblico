@@ -658,7 +658,7 @@ public class Application {
             boolean back = false;
 
             while (!back) {
-                System.out.println("1 - Biglietti emessi per punto di emissione");
+                System.out.println("1 - Biglietti emessi per punto vendita");
                 System.out.println("2 - Biglietti emessi in un dato periodo di tempo");
                 System.out.println("0 - Esci");
 
@@ -686,6 +686,15 @@ public class Application {
                             System.out.println("Scelta non valida.");
                         }
                         break;
+                    case 2:
+                        System.out.println("Numero di abbonamenti emessi in un determinato periodo di tempo");
+                        System.out.println("Inserisci la data di inizio, nel formato [YYYY-MM-DD]");
+                        LocalDate inizio = LocalDate.parse(scanner.nextLine());
+                        System.out.println("Inserisci la data di fine: ");
+                        LocalDate fine = LocalDate.parse(scanner.nextLine());
+                        long abbonamenti = abbonamentoDAO.abbonamentiEmessiPeriodo(inizio, fine);
+                        System.out.println("Il numero di abbonamenti emessi nel periodo è: " + abbonamenti);
+                        return;
 
                     default:
                         System.out.println("Scelta non valida.");
