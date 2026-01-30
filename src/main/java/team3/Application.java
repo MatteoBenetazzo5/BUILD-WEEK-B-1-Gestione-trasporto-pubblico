@@ -414,11 +414,7 @@ public class Application {
                             return;
 
                         } else {
-                            System.out.println("Purtroppo la tua tessera è scaduta, creazione di una nuova tessera in corso.");
-                            Tessera nuovaTessera = new Tessera("TSSR", LocalDate.now(), LocalDate.now().plusYears(1),
-                                    tessera1.getUtente());
-                            System.out.println("\nLa tua nuova tessera con codice: " + nuovaTessera.getCodiceTessera() +
-                                    " Ã¨ stata correttamente creata.");
+                            System.out.println("La tessera che hai inserito non è scaduta oppure non esiste.");
                             System.out.println("Reindirizzamento al menu principale.");
                             return;
                         }
