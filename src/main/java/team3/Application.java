@@ -748,7 +748,7 @@ public class Application {
                         break;
 
                     case 3:
-                        System.out.println("Inserisci l'ID del mezzo e della tratta.");
+                        System.out.println("Inserisci l'ID del mezzo.");
                         try {
                             UUID idMezzo = UUID.fromString(scanner.nextLine());
                             MezzoDiTrasporto mezzomezzo = mezziDiTrasportoDAO.findById(idMezzo);
