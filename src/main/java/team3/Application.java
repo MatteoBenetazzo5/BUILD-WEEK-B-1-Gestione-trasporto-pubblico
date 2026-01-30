@@ -449,6 +449,8 @@ public class Application {
             MezzoDiTrasporto mezzoRecuperato2 = mezziDiTrasporto.get(2);
 
             TesseraDAO tesseraDAO = new TesseraDAO(em);
+            BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
+            AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
 
             boolean back = false;
 
@@ -472,6 +474,8 @@ public class Application {
                     case 1:
                         Biglietto bigliettoDistributore = new Biglietto("CVL20", LocalDate.now(), null,
                                 puntoVenditaRecuperato2, mezzoRecuperato2);
+                        bigliettiDAO.save(bigliettoDistributore);
+
                         System.out.println("Il tuo biglietto con codice: " + bigliettoDistributore.getCodiceUnivoco() + " è stato generato con successo");
                         System.out.println("Reindirizzamento al menu principale.");
                         return;
@@ -487,6 +491,7 @@ public class Application {
                             System.out.println("La tua tessera è valida, ti genero l'abbonamento");
                             Abbonamento abbonamentoDistributore = new Abbonamento("BNMNT", TipoAbbonamento.MENSILE,
                                     LocalDate.now(), LocalDate.now().plusMonths(1), tessera1, puntoVenditaRecuperato2);
+                            abbonamentoDAO.save(abbonamentoDistributore);
                             System.out.println("\nL'abbonamento con codice: " + abbonamentoDistributore.getCodiceUnivoco() +
                                     " L'abbonamento è stato correttamente generato.");
                             System.out.println("Reindirizzamento al menu principale.");
@@ -496,6 +501,8 @@ public class Application {
                             System.out.println("Purtroppo la tua tessera è scaduta, creazione di una nuova tessera in corso.");
                             Tessera nuovaTessera = new Tessera("TSSR", LocalDate.now(), LocalDate.now().plusYears(1),
                                     tessera1.getUtente());
+                            tesseraDAO.saveTessera(nuovaTessera);
+
                             System.out.println("\nLa tua nuova tessera con codice: " + nuovaTessera.getCodiceTessera() +
                                     " La tessera è stata correttamente creata.");
                             System.out.println("Reindirizzamento al menu principale.");
