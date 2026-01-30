@@ -48,8 +48,8 @@ public class BigliettiDAO {
             Number count = (Number) em.createQuery(
                                               """
                                               SELECT COUNT(b)
-                                              FROM biglietti
-                                              WHERE data_vidimazione BETWEEN :from AND :to
+                                              FROM Biglietto b
+                                              WHERE b.dataVidimazione BETWEEN :from AND :to
                                               """
                                       )
                                       .setParameter("from", from)
@@ -67,7 +67,7 @@ public class BigliettiDAO {
     public long findBigliettiVidimatiPerMezzo(UUID mezzoId) {
         TypedQuery<Long> query = em.createQuery(
                 "SELECT COUNT(b) " +
-                        "FROM Biglietti b " +
+                        "FROM Biglietto b " +
                         "WHERE b.mezzo.id = :mezzoId " +
                         "AND b.dataVidimazione IS NOT NULL",
                 Long.class
@@ -78,16 +78,16 @@ public class BigliettiDAO {
         return query.getSingleResult();
     }
 
-    public long findBigliettiEmessiPeriodo (LocalDate inizio, LocalDate fine){
+    public long findBigliettiEmessiPeriodo(LocalDate inizio, LocalDate fine) {
         TypedQuery<Long> query = em.createQuery(
-                "SELECT COUNT(b)" +
-                        "FROM Biglietti " +
-                        "WHERE b.dataEmissione " +
-                        "BETWEEN :inizio AND :fine",
-                       Long.class
+                "SELECT COUNT(b) " +
+                        "FROM Biglietto b " +
+                        "WHERE b.dataEmissione BETWEEN :inizio AND :fine",
+                Long.class
         );
         query.setParameter("inizio", inizio);
         query.setParameter("fine", fine);
         return query.getSingleResult();
     }
+
 }

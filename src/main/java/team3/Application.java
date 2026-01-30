@@ -599,7 +599,15 @@ public class Application {
                             System.out.println("Scelta non valida.");
                         }
                         break;
-
+                    case 2:
+                        System.out.println("Numero di biglietti emessi in un determinato periodo di tempo");
+                        System.out.println("Inserisci la data di inizio, nel formato [YYYY-MM-DD]");
+                        LocalDate inizio = LocalDate.parse(scanner.nextLine());
+                        System.out.println("Inserisci la data di fine: ");
+                        LocalDate fine = LocalDate.parse(scanner.nextLine());
+                        long biglietti = bigliettiDAO.findBigliettiEmessiPeriodo(inizio, fine);
+                        System.out.println("Il numero di biglietti emessi nel periodo è: " + biglietti);
+                        return;
                     case 3:
                         System.out.println("Inserisci l'id del mezzo di cui vuoi vedere il numero di biglietti vidimati.");
                         try {
@@ -610,7 +618,15 @@ public class Application {
                             System.out.println("Scelta non valida.");
                         }
                         break;
-
+                    case 4:
+                        System.out.println("Numero di biglietti vidimati in un determinato periodo di tempo");
+                        System.out.println("Inserisci la data di inizio, nel formato [YYYY-MM-DD]");
+                        LocalDate inizioV = LocalDate.parse(scanner.nextLine());
+                        System.out.println("Inserisci la data di fine: ");
+                        LocalDate fineV = LocalDate.parse(scanner.nextLine());
+                        long bigliettiV = bigliettiDAO.countBigliettiVidimatiPeriodo(inizioV, fineV);
+                        System.out.println("Il numero di biglietti emessi nel periodo è: " + bigliettiV);
+                        return;
                     default:
                         System.out.println("Scelta non valida.");
                 }
