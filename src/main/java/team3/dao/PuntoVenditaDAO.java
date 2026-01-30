@@ -78,7 +78,7 @@ public class PuntoVenditaDAO {
     public long countAbbonamentiPerPuntoEmissione(UUID puntoId) {
 
         TypedQuery<Long> query = entityManager.createQuery(
-                "SELECT COUNT(b) " +
+                "SELECT COUNT(a) " +
                         "FROM Abbonamento a " +
                         "WHERE a.puntoVendita.id = :puntoId",
                 Long.class
