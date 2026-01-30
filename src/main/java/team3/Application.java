@@ -736,10 +736,17 @@ public class Application {
                         System.out.println("Inserisci l'ID del mezzo di cui vuoi visualizzare i periodi di servizio.");
                         try {
                             UUID idPeriodoMezzo = UUID.fromString(scanner.nextLine());
-                            List<PeriodoDiServizio> periodo = periodiDiServizioDAO.getPeriodiDiServizio(idPeriodoMezzo);
-                            System.out.println("Ecco i periodi di servizio del mezzo scelto: " + periodo);
-                        } catch (IllegalArgumentException ex) {
-                            System.out.println("Scelta non valida.");
+                            List<PeriodoDiServizio> periodiServizioLista = periodiDiServizioDAO.getPeriodiDiServizio(idPeriodoMezzo);
+                          if (periodiServizioLista.isEmpty()) {
+                              System.out.println("Non sono registrati periodi di servizio per questo mezzo.");
+                           } else {
+                               periodiServizioLista.forEach(p ->
+                               System.out.println("Date di inizio servizio: " + p.getDataInizio()));
+
+
+                                   }
+                        } catch (NotFoundIdException ex) {
+                            System.out.println(ex.getMessage());
                         }
                         break;
 
@@ -747,11 +754,26 @@ public class Application {
                         System.out.println("Inserisci l'ID del mezzo di cui vuoi visualizzare i periodi di manutenzione.");
                         try {
                             UUID idPeriodoManutenzione = UUID.fromString(scanner.nextLine());
-                            List<PeriodoDiServizio> periodo2 = periodiDiServizioDAO.getPeriodiDiManutenzione(idPeriodoManutenzione);
-                            System.out.println("Ecco i periodi di manutenzione del mezzo scelto: " + periodo2);
-                        } catch (IllegalArgumentException ex) {
-                            System.out.println("Scelta non valida.");
-                        }
+                             System.out.println("\nPeriodi di manutenzione: ");
+          List<PeriodoDiServizio> periodiManutenzioneLista = periodiDiServizioDAO.getPeriodiDiManutenzione(idPeriodoManutenzione);
+            if (periodiManutenzioneLista.isEmpty()) {
+               System.out.println("Non sono registrati periodi di manutenzione per questo mezzo.");
+            } else {
+                periodiManutenzioneLista.forEach(p ->
+                {
+                    if (p.getDataFine() == null) {
+                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
+                                "Date di inizio manutenzione: " + p.getDataInizio());
+                    } else
+
+                        System.out.println("Causa manutenzione: " + p.getCausaManutenzione() +
+                                "\nDate di inizio manutenzione: " + p.getDataInizio() +
+                                " date di fine: " + p.getDataFine());
+                });
+            }
+        } catch (NotFoundIdException ex) {
+            System.out.println(ex.getMessage());
+        }
                         break;
 
                     case 3:
