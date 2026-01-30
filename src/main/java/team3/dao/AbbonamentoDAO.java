@@ -3,6 +3,7 @@ package team3.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import team3.entities.Abbonamento;
 import team3.entities.Biglietto;
 
@@ -48,6 +49,16 @@ public class AbbonamentoDAO {
         } catch (NoResultException e) {
             return false;
         }
+    }
+
+    public long abbonamentiEmessiPeriodo(LocalDate start,LocalDate end){
+        TypedQuery<Long> query= em.createQuery(
+                "SELECT COUNT (a) FROM Abbonamento a WHERE a.dataInizio BETWEEN :start AND end",
+                Long.class
+        );
+        query.setParameter("start",start);
+        query.setParameter("end",end);
+        return query.getSingleResult();
     }
 
     // 2) NUM ABBONAMENTI EMESSI PER PUNTO EMISSIONE in un PERIODO (uso dataInizio come emissione)
