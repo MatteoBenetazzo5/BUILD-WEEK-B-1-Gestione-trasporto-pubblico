@@ -783,7 +783,7 @@ public class Application {
                             MezzoDiTrasporto mezzomezzo = mezziDiTrasportoDAO.findById(idMezzo);
                             System.out.println("Inserisci l'ID della tratta.");
                             UUID idTratta = UUID.fromString(scanner.nextLine());
-                            double trattaMezzo = percorrenzaDAO.getTempoMedioEffettivo(mezzomezzo, idTratta);
+                            long trattaMezzo = (long) percorrenzaDAO.getTempoMedioEffettivo(mezzomezzo, idTratta);
                             System.out.println(trattaMezzo);
                         } catch (IllegalArgumentException ex) {
                             System.out.println("Scelta non valida.");
@@ -833,6 +833,7 @@ public class Application {
                         int tempo = Integer.parseInt(scanner.nextLine());
 
                         Tratta trattaNuova = new Tratta(partenza, arrivo, tempo);
+                        trattaDAO.saveTratta(trattaNuova);
                         System.out.println("La seguente tratta è stata creata correttamente: " + trattaNuova);
                         break;
 
