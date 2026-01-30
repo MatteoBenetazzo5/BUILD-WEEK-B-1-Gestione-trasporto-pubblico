@@ -6,9 +6,7 @@ import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import team3.entities.Biglietto;
 import team3.entities.Percorrenza;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 

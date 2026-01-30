@@ -25,7 +25,7 @@ public class Biglietto {
 
 
     @Column(name = "data_vidimazione")
-    private LocalDateTime dataVidimazione; // nullable finché non è vidimato
+    private LocalDate dataVidimazione; // nullable finché non è vidimato
 
     @ManyToOne
     @JoinColumn(name = "punto_emissione_id", nullable = false)
@@ -38,7 +38,7 @@ public class Biglietto {
     public Biglietto() {
     }
 
-    public Biglietto(String codiceUnivoco, LocalDate dataEmissione, LocalDateTime dataVidimazione, PuntoVendita puntoVendita, MezzoDiTrasporto mezzo) {
+    public Biglietto(String codiceUnivoco, LocalDate dataEmissione, LocalDate dataVidimazione, PuntoVendita puntoVendita, MezzoDiTrasporto mezzo) {
         this.codiceUnivoco = codiceUnivoco;
         this.dataEmissione = dataEmissione;
         this.dataVidimazione = dataVidimazione;
@@ -67,11 +67,11 @@ public class Biglietto {
     }
 
 
-    public LocalDateTime getDataVidimazione() {
+    public LocalDate getDataVidimazione() {
         return dataVidimazione;
     }
 
-    public void setDataVidimazione(LocalDateTime dataVidimazione) {
+    public void setDataVidimazione(LocalDate dataVidimazione) {
         this.dataVidimazione = dataVidimazione;
     }
 

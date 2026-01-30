@@ -132,26 +132,16 @@ public class Application {
         //BIGLIETTO
         BigliettiDAO bigliettiDAO = new BigliettiDAO(em);
 
-//        Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
-        //bigliettiDAO.save(biglietto1);
-        Biglietto biglietto2 = new Biglietto("456DEF", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato, mezzoRecuperato);
-//        bigliettiDAO.save(biglietto2);
-        Biglietto biglietto3 = new Biglietto("789GHL", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato2, mezzoRecuperato2);
-//        bigliettiDAO.save(biglietto3);
-        Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDateTime.now(), puntoVenditaRecuperato3, mezzoRecuperato3);
-//        bigliettiDAO.save(biglietto4);
+      Biglietto biglietto1 = new Biglietto("123ABC",LocalDate.now(), null,puntoVenditaRecuperato,mezzoRecuperato);
+        bigliettiDAO.save(biglietto1);
+        Biglietto biglietto2 = new Biglietto("456DEF", LocalDate.now(), LocalDate.now().plusMonths(3), puntoVenditaRecuperato, mezzoRecuperato);
+        bigliettiDAO.save(biglietto2);
+        Biglietto biglietto3 = new Biglietto("789GHL", LocalDate.now(), LocalDate.now().plusMonths(2), puntoVenditaRecuperato2, mezzoRecuperato2);
+       bigliettiDAO.save(biglietto3);
+        Biglietto biglietto4 = new Biglietto("184THS", LocalDate.now(), LocalDate.now().plusMonths(1), puntoVenditaRecuperato3, mezzoRecuperato3);
+        bigliettiDAO.save(biglietto4);
 
-        List<Biglietto> lista = bigliettiDAO.findAllBiglietti();
 
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        for (Biglietto b : lista) {
-            Biglietto managed = em.contains(b) ? b : em.merge(b);
-            em.remove(managed);
-        }
-
-        tx.commit();
 
 
         // Cerco il tipo di mezzo dato un id presente nel DB
