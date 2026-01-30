@@ -783,7 +783,7 @@ public class Application {
                             MezzoDiTrasporto mezzomezzo = mezziDiTrasportoDAO.findById(idMezzo);
                             System.out.println("Inserisci l'ID della tratta.");
                             UUID idTratta = UUID.fromString(scanner.nextLine());
-                            double trattaMezzo = percorrenzaDAO.getTempoMedioEffettivo(mezzomezzo, idTratta);
+                            long trattaMezzo = (long) percorrenzaDAO.getTempoMedioEffettivo(mezzomezzo, idTratta);
                             System.out.println("Il tempo medio di percorrenza è: " + trattaMezzo);
                             long numeroPercorrenze = percorrenzaDAO.countPercorrenze(mezzomezzo, idTratta);
                             System.out.println("Il mezzo ha percorso la tratta " + numeroPercorrenze + " volte.");
