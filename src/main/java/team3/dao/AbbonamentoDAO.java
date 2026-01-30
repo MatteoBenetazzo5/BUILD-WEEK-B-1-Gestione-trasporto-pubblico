@@ -53,7 +53,7 @@ public class AbbonamentoDAO {
 
     public long abbonamentiEmessiPeriodo(LocalDate start,LocalDate end){
         TypedQuery<Long> query= em.createQuery(
-                "SELECT COUNT (a) FROM Abbonamento a WHERE a.dataInizio BETWEEN :start AND end",
+                "SELECT COUNT (a) FROM Abbonamento a WHERE a.dataInizio BETWEEN :start AND :end",
                 Long.class
         );
         query.setParameter("start",start);
